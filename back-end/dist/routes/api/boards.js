@@ -7,4 +7,5 @@ const express_1 = __importDefault(require("express"));
 const boards_1 = __importDefault(require("../../contollers/boards"));
 const boardsRouter = express_1.default.Router();
 boardsRouter.get('/', boards_1.default.getAllBoards);
+boardsRouter.get('/:id', boards_1.default.getBoardById);
 exports.default = boardsRouter;

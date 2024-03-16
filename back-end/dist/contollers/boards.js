@@ -14,11 +14,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const board_1 = __importDefault(require("../models/board"));
 const ctrlWrapper_1 = __importDefault(require("../decorators/ctrlWrapper"));
+const HttpError_1 = __importDefault(require("../helpers/HttpError"));
 const getAllBoards = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield board_1.default.find();
     // if not needed - find({}, '-name -email etc')
     res.json({ data });
 });
+const getBoardById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const board = yield board_1.default.findById(id);
+    // if search by title - await Contact.findOne({title: title})
+    if (!board) {
+        throw (0, HttpError_1.default)(404, `Contact with ID ${id} not found`);
+    }
+    res.json(board);
+});
 exports.default = {
     getAllBoards: (0, ctrlWrapper_1.default)(getAllBoards),
+    getBoardById: (0, ctrlWrapper_1.default)(getBoardById),
 };
