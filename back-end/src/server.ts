@@ -1,5 +1,5 @@
 import app from './app';
-import mongoose, { ConnectOptions } from 'mongoose';
+import mongoose from 'mongoose';
 import 'dotenv/config';
 import envsConfig from './conf/envConfs';
 
