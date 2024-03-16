@@ -15,7 +15,7 @@ const getBoardById = async (req: Request, res: Response) => {
     const board = await Board.findById(id);
     // if search by title - await Contact.findOne({title: title})
     if (!board) {
-        throw HttpError(404, `Contact with ID ${id} not found`);
+        throw HttpError(404, `Board with ID ${id} not found`);
     }
     res.json(board);
 };
@@ -48,7 +48,7 @@ const updateBoard = async (req: Request, res: Response) => {
     });
 
     if (!updatedBoard) {
-        throw HttpError(404, `Book with ID ${id} not found`);
+        throw HttpError(404, `Board with ID ${id} not found`);
     }
     res.json(updatedBoard);
 };

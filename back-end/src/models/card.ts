@@ -4,6 +4,7 @@ import handleMongooseError from '../helpers/handleMongooseError';
 interface Card {
     title: string;
     description: string;
+    owner: string;
 }
 
 const cardSchema = new Schema<Card>(
@@ -15,6 +16,10 @@ const cardSchema = new Schema<Card>(
         description: {
             type: String,
             required: [true, 'Set description for card'],
+        },
+        owner: {
+            type: String,
+            required: [true, 'Set ownerId for card'],
         },
     },
     { versionKey: false, timestamps: true }

@@ -14,6 +14,10 @@ const cardSchema = new mongoose_1.Schema({
         type: String,
         required: [true, 'Set description for card'],
     },
+    owner: {
+        type: String,
+        required: [true, 'Set ownerId for card'],
+    },
 }, { versionKey: false, timestamps: true });
 cardSchema.post('save', handleMongooseError_1.default);
 const Card = (0, mongoose_1.model)('card', cardSchema);

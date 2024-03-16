@@ -8,6 +8,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 require("dotenv/config");
 const boards_1 = __importDefault(require("./routes/api/boards"));
+const cards_1 = __importDefault(require("./routes/api/cards"));
 const app = (0, express_1.default)();
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 app.use((req, res, next) => {
@@ -22,6 +23,7 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.static('public'));
 app.use('/api/boards', boards_1.default);
+app.use('/api/boards', cards_1.default);
 app.use((req, res) => {
     res.status(404).json({ message: 'Not found' });
 });

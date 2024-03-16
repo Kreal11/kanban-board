@@ -3,6 +3,7 @@ import logger from 'morgan';
 import cors from 'cors';
 import 'dotenv/config';
 import boardsRouter from './routes/api/boards';
+import cardsRouter from './routes/api/cards';
 
 interface CustomError extends Error {
     status?: number;
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.use('/api/boards', boardsRouter);
+app.use('/api/boards', cardsRouter);
 
 app.use((req, res: Response) => {
     res.status(404).json({ message: 'Not found' });

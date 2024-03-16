@@ -25,7 +25,7 @@ const getBoardById = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const board = yield board_1.default.findById(id);
     // if search by title - await Contact.findOne({title: title})
     if (!board) {
-        throw (0, HttpError_1.default)(404, `Contact with ID ${id} not found`);
+        throw (0, HttpError_1.default)(404, `Board with ID ${id} not found`);
     }
     res.json(board);
 });
@@ -50,7 +50,7 @@ const updateBoard = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         new: true,
     });
     if (!updatedBoard) {
-        throw (0, HttpError_1.default)(404, `Book with ID ${id} not found`);
+        throw (0, HttpError_1.default)(404, `Board with ID ${id} not found`);
     }
     res.json(updatedBoard);
 });

@@ -12,24 +12,43 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const board_1 = __importDefault(require("../models/board"));
 const ctrlWrapper_1 = __importDefault(require("../decorators/ctrlWrapper"));
 const HttpError_1 = __importDefault(require("../helpers/HttpError"));
-const getAllBoards = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield board_1.default.find();
+const card_1 = __importDefault(require("../models/card"));
+const getAllCards = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const data = yield card_1.default.find({ owner: id });
     // if not needed - find({}, '-name -email etc')
     res.json({ data });
 });
-const getBoardById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const board = yield board_1.default.findById(id);
-    // if search by title - await Contact.findOne({title: title})
-    if (!board) {
-        throw (0, HttpError_1.default)(404, `Contact with ID ${id} not found`);
+const addCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const body = req.body;
+    const createdCard = yield card_1.default.create(Object.assign({}, body));
+    res.status(201).json(createdCard);
+});
+const deleteCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.body;
+    const deletedCard = yield card_1.default.findByIdAndDelete(id);
+    if (!deletedCard) {
+        throw (0, HttpError_1.default)(404, `Card with ID ${id} not found`);
     }
-    res.json(board);
+    res.json(deletedCard);
+    // res.status(204).send();
+});
+const updateCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.body;
+    const body = req.body;
+    const updatedCard = yield card_1.default.findByIdAndUpdate(id, body, {
+        new: true,
+    });
+    if (!updatedCard) {
+        throw (0, HttpError_1.default)(404, `Card with ID ${id} not found`);
+    }
+    res.json(updatedCard);
 });
 exports.default = {
-    getAllBoards: (0, ctrlWrapper_1.default)(getAllBoards),
-    getBoardById: (0, ctrlWrapper_1.default)(getBoardById),
+    getAllCards: (0, ctrlWrapper_1.default)(getAllCards),
+    addCard: (0, ctrlWrapper_1.default)(addCard),
+    deleteCard: (0, ctrlWrapper_1.default)(deleteCard),
+    updateCard: (0, ctrlWrapper_1.default)(updateCard),
 };
