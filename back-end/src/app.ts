@@ -1,7 +1,8 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import logger from 'morgan';
 import cors from 'cors';
 import 'dotenv/config';
+import boardsRouter from './routes/api/boards';
 
 const app = express();
 
@@ -21,11 +22,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+app.use('/api/boards', boardsRouter);
+
 app.use((req, res) => {
     res.status(404).json({ message: 'Not found' });
 });
 
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response) => {
     const { status = 500, message = 'Server error' } = err;
     res.status(status).json({ message, err });
 });
