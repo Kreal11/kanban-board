@@ -10,12 +10,12 @@ const boardSchema = new Schema<Board>(
     {
         title: {
             type: String,
-            required: [true, 'Set title for contact'],
+            required: [true, 'Set title for board'],
             unique: true,
         },
         theme: {
             type: String,
-            required: [true, 'Set title for contact'],
+            required: [true, 'Set title for board'],
         },
     },
     { versionKey: false, timestamps: true }

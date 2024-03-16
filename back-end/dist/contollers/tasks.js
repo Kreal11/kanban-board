@@ -29,35 +29,7 @@ const getBoardById = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
     res.json(board);
 });
-const addBoard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const body = req.body;
-    const createdBoard = yield board_1.default.create(Object.assign({}, body));
-    res.status(201).json(createdBoard);
-});
-const deleteBoard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const deletedBoard = yield board_1.default.findByIdAndDelete(id);
-    if (!deletedBoard) {
-        throw (0, HttpError_1.default)(404, `Board with ID ${id} not found`);
-    }
-    res.json(deletedBoard);
-    // res.status(204).send();
-});
-const updateBoard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const body = req.body;
-    const updatedBoard = yield board_1.default.findByIdAndUpdate(id, body, {
-        new: true,
-    });
-    if (!updatedBoard) {
-        throw (0, HttpError_1.default)(404, `Book with ID ${id} not found`);
-    }
-    res.json(updatedBoard);
-});
 exports.default = {
     getAllBoards: (0, ctrlWrapper_1.default)(getAllBoards),
     getBoardById: (0, ctrlWrapper_1.default)(getBoardById),
-    addBoard: (0, ctrlWrapper_1.default)(addBoard),
-    deleteBoard: (0, ctrlWrapper_1.default)(deleteBoard),
-    updateBoard: (0, ctrlWrapper_1.default)(updateBoard),
 };

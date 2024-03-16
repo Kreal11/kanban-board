@@ -8,12 +8,11 @@ const handleMongooseError_1 = __importDefault(require("../helpers/handleMongoose
 const boardSchema = new mongoose_1.Schema({
     title: {
         type: String,
-        required: [true, 'Set title for board'],
-        unique: true,
+        required: [true, 'Set title for task'],
     },
-    theme: {
+    description: {
         type: String,
-        required: [true, 'Set title for board'],
+        required: [true, 'Set description for task'],
     },
 }, { versionKey: false, timestamps: true });
 boardSchema.post('save', handleMongooseError_1.default);
