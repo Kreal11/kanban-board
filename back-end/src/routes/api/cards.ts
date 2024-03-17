@@ -4,12 +4,12 @@ import cardsController from '../../contollers/cards';
 
 const cardsRouter = express.Router();
 
-cardsRouter.get('/:id/cards', cardsController.getAllCards);
+cardsRouter.get('/', cardsController.getAllCards);
 
-cardsRouter.post('/:id/cards', cardsController.addCard);
+cardsRouter.post('/', cardsController.addCard);
 
-cardsRouter.patch('/:id/cards', cardsController.updateCard);
+cardsRouter.patch('/:id', cardsController.updateCard);
 
-cardsRouter.delete('/:id/cards', cardsController.deleteCard);
+cardsRouter.delete('/:id', cardsController.deleteCard);
 
 export default cardsRouter;

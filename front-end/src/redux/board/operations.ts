@@ -17,6 +17,22 @@ export const getAllBoardsThunk = createAsyncThunk(
   }
 );
 
+export const getBoardByIdThunk = createAsyncThunk(
+  "getBoardById",
+  async (_id, thunkApi) => {
+    try {
+      const { data } = await kanbanApi.get(`boards/${_id}`);
+      console.log(data);
+      return data;
+    } catch (error) {
+      if (error instanceof Error && typeof error.message === "string") {
+        return thunkApi.rejectWithValue(error.message);
+      }
+      return thunkApi.rejectWithValue(`An unknown error occurred: ${error}`);
+    }
+  }
+);
+
 // export const addBoardThunk = createAsyncThunk<
 //   IQuizCreate,
 //   { theme: string },

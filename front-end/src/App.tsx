@@ -3,7 +3,7 @@ import "./styles/App.css";
 import Layout from "./components/layout/Layout";
 import Home from "./pages/home/Home";
 import NotFound from "./pages/notFound/NotFound";
-import BoardItem from "./components/boardItem/BoardItem";
+import Board from "./pages/board/Board";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path=":id" element={<BoardItem />} />
+          <Route path="api/boards/:id" element={<Board />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

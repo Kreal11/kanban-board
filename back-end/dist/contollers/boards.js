@@ -30,15 +30,15 @@ const getBoardById = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 _id: new mongoose_1.default.Types.ObjectId(id),
             },
         },
-        {
-            $addFields: {
-                boardStringId: { $toString: '$_id' },
-            },
-        },
+        // {
+        //     $addFields: {
+        //         boardStringId: { $toString: '$_id' },
+        //     },
+        // },
         {
             $lookup: {
                 from: 'cards',
-                localField: 'boardStringId',
+                localField: '_id',
                 foreignField: 'owner',
                 as: 'cards',
             },
