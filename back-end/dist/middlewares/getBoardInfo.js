@@ -13,19 +13,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const HttpError_1 = __importDefault(require("../helpers/HttpError"));
+const board_1 = __importDefault(require("../models/board"));
 const getBoardInfo = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const ;
+    const { id } = req.params;
     try {
-        const { id } = yield jwt.verify(token, envsConfig.jwtSecret);
-        const user = yield User.findById(id);
-        if (!token || !user.token || user.token !== token) {
-            next(httpError(401, 'Unauthorized'));
+        const board = (yield board_1.default.findById(id));
+        if (!board) {
+            throw (0, HttpError_1.default)(404, `Board with ID ${id} not found`);
         }
-        req.user = user;
+        req.board = board;
     }
     catch (error) {
-        next((0, HttpError_1.default)(403, 'No board with this id'));
+        next((0, HttpError_1.default)(401, 'No board'));
     }
     next();
 });
-module.exports = authorize;
+exports.default = getBoardInfo;

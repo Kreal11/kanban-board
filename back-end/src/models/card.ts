@@ -4,7 +4,7 @@ import handleMongooseError from '../helpers/handleMongooseError';
 interface Card {
     title: string;
     description: string;
-    owner: string;
+    owner: Schema.Types.ObjectId;
 }
 
 const cardSchema = new Schema<Card>(
@@ -17,10 +17,7 @@ const cardSchema = new Schema<Card>(
             type: String,
             required: [true, 'Set description for card'],
         },
-        owner: {
-            type: String,
-            required: [true, 'Set ownerId for card'],
-        },
+        owner: { type: Schema.Types.ObjectId, ref: 'boards' },
     },
     { versionKey: false, timestamps: true }
 );
