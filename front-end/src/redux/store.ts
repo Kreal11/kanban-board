@@ -1,7 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
   persistStore,
-  //   persistReducer,
+  persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -10,18 +10,18 @@ import {
   REGISTER,
 } from "redux-persist";
 import { boardsReducer } from "./board/slice";
-// import storage from "redux-persist/lib/storage";
+import storage from "redux-persist/lib/storage";
 // import { authReducer } from "./auth/authSlice";
 
-// const authPersistConfig = {
-//   key: "boards",
-//   storage,
-//   whitelist: ["token", "favorites"],
-// };
+const authPersistConfig = {
+  key: "boards",
+  storage,
+  whitelist: ["boards"],
+};
 
 const rootReducer = combineReducers({
   //   auth: persistReducer(authPersistConfig, authReducer),
-  boards: boardsReducer,
+  boards: persistReducer(authPersistConfig, boardsReducer),
 });
 
 export const store = configureStore({

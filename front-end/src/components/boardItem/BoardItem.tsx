@@ -10,6 +10,7 @@ const BoardItem = ({ title, theme, _id }: BoardItemProps) => {
       <li>
         <h2>{title}</h2>
         <p>{theme}</p>
+        <p>{_id}</p>
       </li>
     </>
   );

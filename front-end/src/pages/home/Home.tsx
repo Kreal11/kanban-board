@@ -4,7 +4,8 @@ import { useEffect } from "react";
 import { useAppDispatch } from "../../redux/hooks";
 import { getAllBoardsThunk } from "../../redux/board/operations";
 import BoardItem from "../../components/boardItem/BoardItem";
-import { BoardsWrapper } from "./Home.styled";
+import { AddBoardWrapper, BoardsList, BoardsWrapper } from "./Home.styled";
+import sprite from "../../assets/icons/plus.svg";
 
 const Home = () => {
   const boards = useSelector(selectGetBoards);
@@ -16,13 +17,16 @@ const Home = () => {
 
   return (
     <BoardsWrapper>
-      <div>
+      <AddBoardWrapper>
+        <svg>
+          <use xlinkHref={`${sprite}#icon-plus`} />
+        </svg>
         <p>Add board</p>
-      </div>
-      <ul>
+      </AddBoardWrapper>
+      <BoardsList>
         {boards?.length &&
           boards.map((board) => <BoardItem key={board._id} {...board} />)}
-      </ul>
+      </BoardsList>
     </BoardsWrapper>
   );
 };

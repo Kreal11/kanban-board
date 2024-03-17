@@ -3,7 +3,8 @@ import App from "./App.tsx";
 import "./styles/index.css";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from "./redux/store.ts";
+import { persistor, store } from "./redux/store.ts";
+import { PersistGate } from "redux-persist/integration/react";
 // import { Provider } from "react-redux";
 // import { store } from "./redux/store.ts";
 
@@ -19,9 +20,9 @@ if (!rootElement) {
 ReactDOM.createRoot(rootElement).render(
   <BrowserRouter basename="">
     <Provider store={store}>
-      {/* <PersistGate loading={null} persistor={persistor}> */}
-      <App />
-      {/* </PersistGate> */}
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   </BrowserRouter>
 );

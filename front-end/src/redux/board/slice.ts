@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllBoardsThunk } from "./operations";
+import { getAllBoardsThunk, getBoardByIdThunk } from "./operations";
 import { BoardsState } from "./types";
 
 const initialState: BoardsState = {
@@ -13,12 +13,20 @@ const boardsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getAllBoardsThunk.fulfilled, (state, { payload }) => {
-      state.boards = payload;
+    builder
+      .addCase(getAllBoardsThunk.fulfilled, (state, { payload }) => {
+        state.boards = payload;
 
-      state.isLoading = false;
-      state.error = null;
-    });
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getBoardByIdThunk.fulfilled, (state, { payload }) => {
+        state.boards = state.boards.filter(
+          (board) => board._id === payload._id
+        );
+        state.isLoading = false;
+        state.error = null;
+      });
     //   .addCase(fetchQuizesByRatingThunk.fulfilled, (state, { payload }) => {
     //     state.listRaiting = payload;
     //     state.isLoading = false;
