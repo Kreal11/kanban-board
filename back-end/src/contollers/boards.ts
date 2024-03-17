@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Board from '../models/board';
 import ctrlWrapper from '../decorators/ctrlWrapper';
 import HttpError from '../helpers/HttpError';
+import mongoose from 'mongoose';
 
 const getAllBoards = async (req: Request, res: Response) => {
     const data = await Board.find();
@@ -12,12 +13,35 @@ const getAllBoards = async (req: Request, res: Response) => {
 
 const getBoardById = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const board = await Board.findById(id);
     // if search by title - await Contact.findOne({title: title})
-    if (!board) {
+
+    const pipeline = [
+        {
+            $match: {
+                _id: new mongoose.Types.ObjectId(id),
+            },
+        },
+        {
+            $addFields: {
+                boardStringId: { $toString: '$_id' },
+            },
+        },
+        {
+            $lookup: {
+                from: 'cards',
+                localField: 'boardStringId',
+                foreignField: 'owner',
+                as: 'cards',
+            },
+        },
+    ];
+
+    const result = await Board.aggregate(pipeline);
+
+    if (!result) {
         throw HttpError(404, `Board with ID ${id} not found`);
     }
-    res.json(board);
+    res.json(result);
 };
 
 const addBoard = async (req: Request, res: Response) => {

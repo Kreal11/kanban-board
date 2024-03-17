@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const board_1 = __importDefault(require("../models/board"));
 const ctrlWrapper_1 = __importDefault(require("../decorators/ctrlWrapper"));
 const HttpError_1 = __importDefault(require("../helpers/HttpError"));
+const mongoose_1 = __importDefault(require("mongoose"));
 const getAllBoards = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield board_1.default.find();
     // if not needed - find({}, '-name -email etc')
@@ -22,12 +23,32 @@ const getAllBoards = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 const getBoardById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const board = yield board_1.default.findById(id);
     // if search by title - await Contact.findOne({title: title})
-    if (!board) {
+    const pipeline = [
+        {
+            $match: {
+                _id: new mongoose_1.default.Types.ObjectId(id),
+            },
+        },
+        {
+            $addFields: {
+                boardStringId: { $toString: '$_id' },
+            },
+        },
+        {
+            $lookup: {
+                from: 'cards',
+                localField: 'boardStringId',
+                foreignField: 'owner',
+                as: 'cards',
+            },
+        },
+    ];
+    const result = yield board_1.default.aggregate(pipeline);
+    if (!result) {
         throw (0, HttpError_1.default)(404, `Board with ID ${id} not found`);
     }
-    res.json(board);
+    res.json(result);
 });
 const addBoard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
