@@ -9,7 +9,7 @@ boardsRouter.get('/:id', boardsController.getBoardById);
 
 boardsRouter.post('/', boardsController.addBoard);
 
-boardsRouter.patch('/:id', boardsController.updateBoard);
+boardsRouter.patch('/', boardsController.updateBoard);
 
 boardsRouter.delete('/:id', boardsController.deleteBoard);
 

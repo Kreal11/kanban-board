@@ -6,10 +6,14 @@ import { getAllBoardsThunk } from "../../redux/board/operations";
 import BoardItem from "../../components/boardItem/BoardItem";
 import { AddBoardWrapper, BoardsList, BoardsWrapper } from "./Home.styled";
 import sprite from "../../assets/icons/plus.svg";
+import { useModal } from "../../hooks/useModal";
+import Modal from "../../components/modal/Modal";
+import AddBoardForm from "../../components/addBoardFrom/AddBoardForm";
 
 const Home = () => {
   const boards = useSelector(selectGetBoards);
   const dispatch = useAppDispatch();
+  const { isOpen, openModal, closeModal } = useModal();
 
   useEffect(() => {
     dispatch(getAllBoardsThunk());
@@ -19,7 +23,7 @@ const Home = () => {
     <BoardsWrapper>
       <BoardsList>
         {(!boards || boards.length === 0) && (
-          <AddBoardWrapper>
+          <AddBoardWrapper onClick={openModal}>
             <svg>
               <use xlinkHref={`${sprite}#icon-plus`} />
             </svg>
@@ -30,7 +34,7 @@ const Home = () => {
           boards.map((board, index) => (
             <React.Fragment key={board._id}>
               {index === 0 && (
-                <AddBoardWrapper>
+                <AddBoardWrapper onClick={openModal}>
                   <svg>
                     <use xlinkHref={`${sprite}#icon-plus`} />
                   </svg>
@@ -41,6 +45,11 @@ const Home = () => {
             </React.Fragment>
           ))}
       </BoardsList>
+      {isOpen && (
+        <Modal closeModal={closeModal}>
+          <AddBoardForm closeModal={closeModal} />
+        </Modal>
+      )}
     </BoardsWrapper>
   );
 };

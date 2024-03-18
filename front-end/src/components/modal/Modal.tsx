@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
 import { useCallback, useEffect } from "react";
-import sprite from "../../images/icons/sprite.svg";
+
 import {
   ContentWrapper,
   StyledCloseButton,
@@ -52,9 +52,7 @@ const Modal: React.FC<ModalProps> = ({ children, closeModal }) => {
             title="modal close button"
             onClick={closeModal}
           >
-            <svg>
-              <use xlinkHref={`${sprite}#icon-close-modal`}></use>
-            </svg>
+            Close
           </StyledCloseButton>
           {children}
         </ContentWrapper>

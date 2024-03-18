@@ -32,7 +32,6 @@ export const BoardLi = styled.li`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 14px;
   border-radius: 8px;
   background-color: lightsteelblue;
   height: 250px;
@@ -42,5 +41,20 @@ export const BoardLi = styled.li`
   p {
     white-space: pre-wrap;
     word-wrap: break-word;
+  }
+`;
+
+export const BoardInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  cursor: pointer;
+  background-color: gray;
+  border-radius: 8px;
+  padding: 6px;
+  transition: background-color 0.4s ease-in-out;
+
+  &:hover {
+    background-color: darkslategray;
   }
 `;

@@ -8,6 +8,6 @@ const cards_1 = __importDefault(require("../../contollers/cards"));
 const cardsRouter = express_1.default.Router();
 cardsRouter.get('/', cards_1.default.getAllCards);
 cardsRouter.post('/', cards_1.default.addCard);
-cardsRouter.patch('/:id', cards_1.default.updateCard);
+cardsRouter.patch('/', cards_1.default.updateCard);
 cardsRouter.delete('/:id', cards_1.default.deleteCard);
 exports.default = cardsRouter;

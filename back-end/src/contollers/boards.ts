@@ -64,7 +64,7 @@ const deleteBoard = async (req: Request, res: Response) => {
 };
 
 const updateBoard = async (req: Request, res: Response) => {
-    const { id } = req.params;
+    const { id } = req.body;
     const body = req.body;
 
     const updatedBoard = await Board.findByIdAndUpdate(id, body, {

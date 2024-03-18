@@ -65,7 +65,7 @@ const deleteBoard = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     // res.status(204).send();
 });
 const updateBoard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
+    const { id } = req.body;
     const body = req.body;
     const updatedBoard = yield board_1.default.findByIdAndUpdate(id, body, {
         new: true,

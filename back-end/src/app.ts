@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.use('/boards', boardsRouter);
-app.use('/api/cards', cardsRouter);
+app.use('/cards', cardsRouter);
 
 app.use((req, res: Response) => {
     res.status(404).json({ message: 'Not found' });

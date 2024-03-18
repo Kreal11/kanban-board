@@ -1,12 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { kanbanApi } from "../instance";
+import { AddBoardBody, UpdateBoardBody } from "./types";
 
 export const getAllBoardsThunk = createAsyncThunk(
   "getAllBoards",
   async (_, thunkApi) => {
     try {
       const { data } = await kanbanApi.get("boards");
-      console.log(data);
+
       return data.data;
     } catch (error) {
       if (error instanceof Error && typeof error.message === "string") {
@@ -22,6 +23,22 @@ export const getBoardByIdThunk = createAsyncThunk(
   async (_id: string | undefined, thunkApi) => {
     try {
       const { data } = await kanbanApi.get(`boards/${_id}`);
+
+      return data;
+    } catch (error) {
+      if (error instanceof Error && typeof error.message === "string") {
+        return thunkApi.rejectWithValue(error.message);
+      }
+      return thunkApi.rejectWithValue(`An unknown error occurred: ${error}`);
+    }
+  }
+);
+
+export const addBoardThunk = createAsyncThunk(
+  "addBoard",
+  async (body: AddBoardBody, thunkApi) => {
+    try {
+      const { data } = await kanbanApi.post("boards", body);
       console.log(data);
       return data;
     } catch (error) {
@@ -33,52 +50,35 @@ export const getBoardByIdThunk = createAsyncThunk(
   }
 );
 
-// export const addBoardThunk = createAsyncThunk<
-//   IQuizCreate,
-//   { theme: string },
-//   AsyncThunkConfig
-// >("addedNewQuizes", async (quiz, thunkApi) => {
-//   try {
-//     const { theme } = quiz;
+export const deleteBoardThunk = createAsyncThunk(
+  "deleteBoardById",
+  async (_id: string, thunkApi) => {
+    try {
+      const { data } = await kanbanApi.delete(`/boards/${_id}`);
+      console.log(data);
+      return data;
+    } catch (error) {
+      if (error instanceof Error && typeof error.message === "string") {
+        return thunkApi.rejectWithValue(error.message);
+      }
+      return thunkApi.rejectWithValue(`An unknown error occurred: ${error}`);
+    }
+  }
+);
 
-//     const { data } = await quizApi.post("/quiz", { theme });
+export const updateBoardThunk = createAsyncThunk(
+  "updateQuiz",
+  async (body: UpdateBoardBody, thunkApi) => {
+    try {
+      const { data } = await kanbanApi.patch("boards", body);
 
-//     return data.data as IQuizCreate;
-//   } catch (error: unknown) {
-//     return thunkApi.rejectWithValue(
-//       `${(error as Error)?.message ?? "Unknown error"}`
-//     );
-//   }
-// });
+      console.log(data);
 
-// export const deleteBoardThunk = createAsyncThunk<
-//   string,
-//   string,
-//   AsyncThunkConfig
-// >("deleteQuizById", async (_id, thunkApi) => {
-//   try {
-//     await quizApi.delete(`/quiz/${_id}`, {});
-//     return _id;
-//   } catch (error: unknown) {
-//     return thunkApi.rejectWithValue(
-//       `${(error as Error)?.message ?? "Unknown error"}`
-//     );
-//   }
-// });
-
-// export const updateBoardThunk = createAsyncThunk<
-//   QuizBody,
-//   EditQuiz,
-//   AsyncThunkConfig
-// >("updateQuiz", async (quiz, thunkApi) => {
-//   try {
-//     const { _id, ...body } = quiz;
-
-//     const { data } = await quizApi.patch(`/quiz/${_id}`, body, {});
-//     return data as QuizBody;
-//   } catch (error: unknown) {
-//     return thunkApi.rejectWithValue(
-//       `${(error as Error)?.message ?? "Unknown error"}`
-//     );
-//   }
-// });
+      return data;
+    } catch (error: unknown) {
+      return thunkApi.rejectWithValue(
+        `${(error as Error)?.message ?? "Unknown error"}`
+      );
+    }
+  }
+);

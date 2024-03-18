@@ -1,6 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { getAllBoardsThunk, getBoardByIdThunk } from "./operations";
-import { BoardsState } from "./types";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import {
+  addBoardThunk,
+  deleteBoardThunk,
+  getAllBoardsThunk,
+  getBoardByIdThunk,
+  updateBoardThunk,
+} from "./operations";
+import { Board, BoardsState } from "./types";
 
 const initialState: BoardsState = {
   boards: [],
@@ -8,6 +14,8 @@ const initialState: BoardsState = {
     _id: "",
     title: "",
     theme: "",
+    createdAt: "",
+    updatedAt: "",
     cards: [],
   },
   isLoading: false,
@@ -31,7 +39,41 @@ const boardsSlice = createSlice({
 
         state.isLoading = false;
         state.error = null;
-      });
+      })
+      .addCase(
+        addBoardThunk.fulfilled,
+        (state, { payload }: PayloadAction<Board>) => {
+          state.boards = [...state.boards, payload];
+
+          state.isLoading = false;
+          state.error = null;
+        }
+      )
+      .addCase(
+        deleteBoardThunk.fulfilled,
+        (state, { payload }: PayloadAction<Board>) => {
+          state.boards = state.boards.filter(
+            (board) => board._id !== payload._id
+          );
+
+          state.isLoading = false;
+          state.error = null;
+        }
+      )
+      .addCase(
+        updateBoardThunk.fulfilled,
+        (state, { payload }: PayloadAction<Board>) => {
+          const updatedBoardIndex = state.boards.findIndex(
+            (board) => board._id === payload._id
+          );
+          if (updatedBoardIndex) {
+            state.boards[updatedBoardIndex] = payload;
+          }
+
+          state.isLoading = false;
+          state.error = null;
+        }
+      );
     //   .addCase(fetchQuizesByRatingThunk.fulfilled, (state, { payload }) => {
     //     state.listRaiting = payload;
     //     state.isLoading = false;
