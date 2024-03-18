@@ -33,9 +33,11 @@ const BoardItem = ({ title, theme, _id }: BoardItemProps) => {
   return (
     <>
       <BoardLi>
-        <BoardInfoWrapper onClick={handleGetBoardById}>
-          <h2>{title}</h2>
-          <p>{theme}</p>
+        <BoardInfoWrapper>
+          <div onClick={handleGetBoardById}>
+            <h2>{title}</h2>
+            <p>{theme}</p>
+          </div>
           <p>{_id}</p>
         </BoardInfoWrapper>
         <BoardButtonsWrapper>

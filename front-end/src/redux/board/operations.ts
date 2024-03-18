@@ -67,12 +67,10 @@ export const deleteBoardThunk = createAsyncThunk(
 );
 
 export const updateBoardThunk = createAsyncThunk(
-  "updateQuiz",
+  "updateBoard",
   async (body: UpdateBoardBody, thunkApi) => {
     try {
       const { data } = await kanbanApi.patch("boards", body);
-
-      console.log(data);
 
       return data;
     } catch (error: unknown) {
