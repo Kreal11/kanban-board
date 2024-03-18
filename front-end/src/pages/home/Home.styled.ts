@@ -4,6 +4,7 @@ export const BoardsWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   gap: 50px;
   max-width: 800px;
   margin: 0 auto;
@@ -11,9 +12,11 @@ export const BoardsWrapper = styled.div`
 
 export const BoardsList = styled.ul`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  /* align-items: center; */
+  flex-wrap: wrap;
   gap: 50px;
+  max-width: 800px;
 `;
 
 export const AddBoardWrapper = styled.div`
@@ -45,4 +48,11 @@ export const AddBoardWrapper = styled.div`
     font-size: 20px;
     text-transform: uppercase;
   }
+`;
+
+export const Row = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start; /* Вирівнюємо дошки вгору */
+  gap: 10px; /* Проміжок між дошками */
 `;

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { selectGetBoards } from "../../redux/board/selectors";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch } from "../../redux/hooks";
 import { getAllBoardsThunk } from "../../redux/board/operations";
 import BoardItem from "../../components/boardItem/BoardItem";
@@ -17,15 +17,29 @@ const Home = () => {
 
   return (
     <BoardsWrapper>
-      <AddBoardWrapper>
-        <svg>
-          <use xlinkHref={`${sprite}#icon-plus`} />
-        </svg>
-        <p>Add board</p>
-      </AddBoardWrapper>
       <BoardsList>
+        {(!boards || boards.length === 0) && (
+          <AddBoardWrapper>
+            <svg>
+              <use xlinkHref={`${sprite}#icon-plus`} />
+            </svg>
+            <p>Add board</p>
+          </AddBoardWrapper>
+        )}
         {boards?.length &&
-          boards.map((board) => <BoardItem key={board._id} {...board} />)}
+          boards.map((board, index) => (
+            <React.Fragment key={board._id}>
+              {index === 0 && (
+                <AddBoardWrapper>
+                  <svg>
+                    <use xlinkHref={`${sprite}#icon-plus`} />
+                  </svg>
+                  <p>Add board</p>
+                </AddBoardWrapper>
+              )}
+              <BoardItem {...board} />
+            </React.Fragment>
+          ))}
       </BoardsList>
     </BoardsWrapper>
   );

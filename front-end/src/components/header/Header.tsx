@@ -13,7 +13,7 @@ const Header = () => {
 
   const submit: SubmitHandler<Input> = (data): void => {
     reset();
-    navigate(`api/boards/${data.id}`);
+    navigate(`boards/${data.id}`);
   };
 
   return (

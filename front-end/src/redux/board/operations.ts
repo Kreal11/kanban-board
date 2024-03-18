@@ -22,8 +22,8 @@ export const getBoardByIdThunk = createAsyncThunk(
   async (_id: string | undefined, thunkApi) => {
     try {
       const { data } = await kanbanApi.get(`boards/${_id}`);
-      console.log(data[0]);
-      return data[0];
+      console.log(data);
+      return data;
     } catch (error) {
       if (error instanceof Error && typeof error.message === "string") {
         return thunkApi.rejectWithValue(error.message);
