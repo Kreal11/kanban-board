@@ -3,6 +3,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { updateBoardThunk } from "../../redux/board/operations";
 import { FC } from "react";
 import { FormWrapper, UpdateForm } from "./UpdateBoardForm.styled";
+import { toast } from "react-toastify";
 
 interface Inputs {
   title: string;
@@ -31,9 +32,20 @@ const UpdateBoardForm: FC<UpdateBoardFormProps> = ({
   });
 
   const submit: SubmitHandler<Inputs> = ({ title, theme }) => {
-    dispatch(updateBoardThunk({ title, theme, id }));
-    reset();
-    closeModal();
+    if (!title || !theme) {
+      return toast.warning("Fields are required! Fill out it, please");
+    }
+
+    dispatch(updateBoardThunk({ title, theme, id }))
+      .unwrap()
+      .then(() => {
+        toast.success("Board was updated successfully!");
+        reset();
+        closeModal();
+      })
+      .catch(() => {
+        toast.warning("Oops, something went wrong! Try again, please!");
+      });
   };
 
   return (

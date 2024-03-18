@@ -4,6 +4,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { getBoardByIdThunk } from "../../redux/board/operations";
 import { useSelector } from "react-redux";
 import { selectGetBoardById } from "../../redux/board/selectors";
+import { toast } from "react-toastify";
 
 const Board = () => {
   const { id } = useParams();
@@ -13,7 +14,14 @@ const Board = () => {
   const { _id, title, theme, cards } = useSelector(selectGetBoardById);
 
   useEffect(() => {
-    dispatch(getBoardByIdThunk(id));
+    dispatch(getBoardByIdThunk(id))
+      .unwrap()
+      .then(() => {
+        toast.success("Board info was loaded successfully!");
+      })
+      .catch(() => {
+        toast.warning("Oops, something went wrong! Try again, please!");
+      });
   }, [dispatch, id]);
 
   const handleGoHome = () => {

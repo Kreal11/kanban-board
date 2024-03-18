@@ -3,6 +3,7 @@ import { AddForm, FormWrapper } from "./AddBoardForm.styled";
 import { useAppDispatch } from "../../redux/hooks";
 import { addBoardThunk } from "../../redux/board/operations";
 import { FC } from "react";
+import { toast } from "react-toastify";
 
 interface Inputs {
   title: string;
@@ -18,17 +19,34 @@ const AddBoardForm: FC<AddBoardFormProps> = ({ closeModal }) => {
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
   const submit: SubmitHandler<Inputs> = ({ title, theme }) => {
-    dispatch(addBoardThunk({ title, theme }));
-    reset();
-    closeModal();
+    dispatch(addBoardThunk({ title, theme }))
+      .unwrap()
+      .then(() => {
+        toast.success("New board was added successfully!");
+        reset();
+        closeModal();
+      })
+      .catch(() => {
+        toast.warning(
+          "Oops, something went wrong! Maybe, board with this title already exists. Try to change it! Otherwise try again, please!"
+        );
+      });
   };
 
   return (
     <FormWrapper>
       <h3>Add info for new board!</h3>
       <AddForm onSubmit={handleSubmit(submit)}>
-        <input type="text" placeholder="Enter title" {...register("title")} />
-        <input type="text" placeholder="Enter theme" {...register("theme")} />
+        <input
+          type="text"
+          placeholder="Enter title"
+          {...(register("title"), { required: true })}
+        />
+        <input
+          type="text"
+          placeholder="Enter theme"
+          {...(register("theme"), { required: true })}
+        />
         <button>Submit</button>
       </AddForm>
     </FormWrapper>

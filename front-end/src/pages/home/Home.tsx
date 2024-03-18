@@ -9,6 +9,7 @@ import sprite from "../../assets/icons/plus.svg";
 import { useModal } from "../../hooks/useModal";
 import Modal from "../../components/modal/Modal";
 import AddBoardForm from "../../components/addBoardFrom/AddBoardForm";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const boards = useSelector(selectGetBoards);
@@ -16,7 +17,14 @@ const Home = () => {
   const { isOpen, openModal, closeModal } = useModal();
 
   useEffect(() => {
-    dispatch(getAllBoardsThunk());
+    dispatch(getAllBoardsThunk())
+      .unwrap()
+      .then(() => {
+        toast.success("Boards were loaded successfully!");
+      })
+      .catch(() => {
+        toast.warning("Oops, something went wrong! Try again, please!");
+      });
   }, [dispatch]);
 
   return (
