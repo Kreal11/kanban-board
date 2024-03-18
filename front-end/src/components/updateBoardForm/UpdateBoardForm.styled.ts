@@ -6,6 +6,21 @@ export const FormWrapper = styled.div`
   h3 {
     margin-bottom: 20px;
   }
+
+  button {
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: none;
+    padding: 8px;
+    transition: background-color 0.4s ease-in-out;
+
+    &:hover {
+      background-color: darkslategray;
+    }
+  }
 `;
 
 export const UpdateForm = styled.form`

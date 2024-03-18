@@ -5,8 +5,8 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { persistor, store } from "./redux/store.ts";
 import { PersistGate } from "redux-persist/integration/react";
-// import { Provider } from "react-redux";
-// import { store } from "./redux/store.ts";
+import { Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const rootElementId = "root";
 const rootElement = document.getElementById(rootElementId);
@@ -21,6 +21,19 @@ ReactDOM.createRoot(rootElement).render(
   <BrowserRouter basename="">
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+          transition={Slide}
+        />
         <App />
       </PersistGate>
     </Provider>
