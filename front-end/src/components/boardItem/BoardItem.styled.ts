@@ -45,16 +45,21 @@ export const BoardLi = styled.li`
 `;
 
 export const BoardInfoWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  cursor: pointer;
-  background-color: gray;
-  border-radius: 8px;
   padding: 6px;
-  transition: background-color 0.4s ease-in-out;
 
-  &:hover {
-    background-color: darkslategray;
+  div {
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+    background-color: gray;
+    border-radius: 8px;
+    transition: background-color 0.4s ease-in-out;
+    margin-bottom: 14px;
+
+    &:hover {
+      background-color: darkslategray;
+    }
   }
 `;

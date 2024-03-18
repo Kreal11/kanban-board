@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import {
   addBoardThunk,
   deleteBoardThunk,
@@ -66,102 +66,41 @@ const boardsSlice = createSlice({
           const updatedBoardIndex = state.boards.findIndex(
             (board) => board._id === payload._id
           );
-          if (updatedBoardIndex) {
+
+          if (updatedBoardIndex !== -1) {
             state.boards[updatedBoardIndex] = payload;
           }
 
           state.isLoading = false;
           state.error = null;
         }
+      )
+      .addMatcher(
+        isAnyOf(
+          getAllBoardsThunk.pending,
+          getBoardByIdThunk.pending,
+          addBoardThunk.pending,
+          deleteBoardThunk.pending,
+          updateBoardThunk.pending
+        ),
+        (state) => {
+          state.isLoading = true;
+          state.error = null;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          getAllBoardsThunk.rejected,
+          getBoardByIdThunk.rejected,
+          addBoardThunk.rejected,
+          deleteBoardThunk.rejected,
+          updateBoardThunk.rejected
+        ),
+        (state, { payload }) => {
+          state.isLoading = false;
+          state.error = typeof payload === "string" ? payload : null;
+        }
       );
-    //   .addCase(fetchQuizesByRatingThunk.fulfilled, (state, { payload }) => {
-    //     state.listRaiting = payload;
-    //     state.isLoading = false;
-    //   })
-    //   .addCase(fetchCategoriesThunk.fulfilled, (state, { payload }) => {
-    //     state.listCategory.data = payload.data;
-    //     state.listCategory.data.category = payload.data.category;
-    //     state.listCategory.currentPage = payload.currentPage;
-    //     state.listCategory.pageSize = payload.pageSize;
-    //     state.listCategory.totalPages = payload.totalPages;
-    //     state.listCategory.data.total = payload.data.total;
-
-    //     state.isLoading = false;
-    //   })
-    //   .addCase(deleteQuizesThunk.fulfilled, (state, { payload }) => {
-    //     state.listCategory.data.result = state.listCategory.data.result.filter(
-    //       (quiz) => quiz._id !== payload
-    //     );
-    //     state.isLoading = false;
-    //   })
-    //   .addCase(updateQuizesThunk.fulfilled, (state, { payload }) => {
-    //     const updatedQuizeIndex = state.listCategory.data.result.findIndex(
-    //       (quiz) => quiz._id === payload._id
-    //     );
-    //     if (updatedQuizeIndex) {
-    //       state.listCategory.data.result[updatedQuizeIndex] = {
-    //         ...state.listCategory.data.result[updatedQuizeIndex],
-    //         ...payload,
-    //       };
-    //     }
-    //     state.isLoading = false;
-    //   })
-    //   .addCase(getFavoriteQuizes.fulfilled, (state, { payload }) => {
-    //     state.listCategory.data.result = payload;
-    //     state.isLoading = false;
-    //   })
-    //   .addCase(getOwnQuizes.fulfilled, (state, { payload }) => {
-    //     state.listCategory.data.result = payload;
-    //     state.isLoading = false;
-    //   })
-    //   .addCase(getPassedQuizzesThunk.fulfilled, (state, { payload }) => {
-    //     state.listCategory.data.result = payload;
-    //     state.isLoading = false;
-    //   })
-    //   .addCase(getTotalQuizzesThunk.fulfilled, (state, { payload }) => {
-    //     state.totalPassedQuizzes = payload;
-    //     state.isLoading = false;
-    //   })
-    //   .addMatcher(
-    //     isAnyOf(
-    //       fetchQuizesThunk.pending,
-    //       fetchCategoriesThunk.pending,
-    //       getFavoriteQuizes.pending,
-    //       getOwnQuizes.pending,
-    //       getPassedQuizzesThunk.pending
-    //     ),
-    //     (state) => {
-    //       state.isLoading = true;
-    //       state.listCategory.data.result = [];
-    //     }
-    //   )
-    //   .addMatcher(
-    //     isAnyOf(
-    //       addQuizesThunk.pending,
-    //       deleteQuizesThunk.pending,
-    //       updateQuizesThunk.pending
-    //     ),
-    //     (state) => {
-    //       state.isLoading = true;
-    //     }
-    //   )
-    //   .addMatcher(
-    //     isAnyOf(
-    //       fetchQuizesThunk.rejected,
-    //       addQuizesThunk.rejected,
-    //       deleteQuizesThunk.rejected,
-    //       updateQuizesThunk.rejected,
-    //       fetchCategoriesThunk.rejected,
-    //       getFavoriteQuizes.rejected,
-    //       getOwnQuizes.rejected,
-    //       getPassedQuizzesThunk.rejected
-    //     ),
-    //     (state, action) => {
-    //       state.isLoading = false;
-    //       state.error =
-    //         typeof action.payload === "string" ? action.payload : null;
-    //     }
-    //   );
   },
 });
 

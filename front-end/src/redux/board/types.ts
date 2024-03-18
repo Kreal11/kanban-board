@@ -20,7 +20,7 @@ export interface BoardsState {
   boards: Board[] | [];
   board: Board;
   isLoading: boolean;
-  error: Error | null;
+  error: string | null;
 }
 
 export interface AddBoardBody {
