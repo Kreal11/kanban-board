@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useAppDispatch } from "../../redux/hooks";
 import { getBoardByIdThunk } from "../../redux/board/operations";
 import { useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import { selectGetBoardById } from "../../redux/board/selectors";
 const Board = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { _id, title, theme, cards } = useSelector(selectGetBoardById);
 
@@ -15,20 +16,28 @@ const Board = () => {
     dispatch(getBoardByIdThunk(id));
   }, [dispatch, id]);
 
+  const handleGoHome = () => {
+    navigate("/");
+  };
+
   return (
     <div>
-      <p>{_id}</p>
-      <p>{title}</p>
-      <p>{theme}</p>
-      <ul>
-        {cards?.map((card) => (
-          <li key={card._id}>
-            <p>{card._id}</p>
-            <p>{card.title}</p>
-            <p>{card.description}</p>
-          </li>
-        ))}
-      </ul>
+      <button onClick={handleGoHome}>↩ Home</button>
+
+      <div>
+        <p>{_id}</p>
+        <p>{title}</p>
+        <p>{theme}</p>
+        <ul>
+          {cards?.map((card) => (
+            <li key={card._id}>
+              <p>{card._id}</p>
+              <p>{card.title}</p>
+              <p>{card.description}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

@@ -22,11 +22,7 @@ export const ContentWrapper = styled.div`
   border: 1px solid rgba(244, 244, 244, 0.3);
   overflow: hidden;
   border-radius: 20px;
-  width: 335px;
-
-  @media screen and (min-width: ${tablet}) {
-    width: 474px;
-  }
+  padding: 60px;
 `;
 
 export const StyledCloseButton = styled.button`

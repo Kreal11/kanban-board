@@ -12,8 +12,7 @@ export const BoardsWrapper = styled.div`
 
 export const BoardsList = styled.ul`
   display: flex;
-  justify-content: space-between;
-  /* align-items: center; */
+  justify-content: center;
   flex-wrap: wrap;
   gap: 50px;
   max-width: 800px;

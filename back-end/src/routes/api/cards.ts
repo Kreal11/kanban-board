@@ -8,7 +8,7 @@ cardsRouter.get('/', cardsController.getAllCards);
 
 cardsRouter.post('/', cardsController.addCard);
 
-cardsRouter.patch('/:id', cardsController.updateCard);
+cardsRouter.patch('/', cardsController.updateCard);
 
 cardsRouter.delete('/:id', cardsController.deleteCard);
 

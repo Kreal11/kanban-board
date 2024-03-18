@@ -9,6 +9,6 @@ const boardsRouter = express_1.default.Router();
 boardsRouter.get('/', boards_1.default.getAllBoards);
 boardsRouter.get('/:id', boards_1.default.getBoardById);
 boardsRouter.post('/', boards_1.default.addBoard);
-boardsRouter.patch('/:id', boards_1.default.updateBoard);
+boardsRouter.patch('/', boards_1.default.updateBoard);
 boardsRouter.delete('/:id', boards_1.default.deleteBoard);
 exports.default = boardsRouter;

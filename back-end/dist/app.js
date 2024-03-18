@@ -23,7 +23,7 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.static('public'));
 app.use('/boards', boards_1.default);
-app.use('/api/cards', cards_1.default);
+app.use('/cards', cards_1.default);
 app.use((req, res) => {
     res.status(404).json({ message: 'Not found' });
 });

@@ -8,15 +8,28 @@ export interface Card {
 }
 
 export interface Board {
-  _id: string | undefined;
-  title: string | undefined;
-  theme: string | undefined;
-  cards: [Card] | [];
+  _id: string;
+  title: string;
+  theme: string;
+  cards?: Card[] | [];
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface BoardsState {
-  boards?: [Board] | [];
+  boards: Board[] | [];
   board: Board;
   isLoading: boolean;
   error: Error | null;
+}
+
+export interface AddBoardBody {
+  title: string;
+  theme: string;
+}
+
+export interface UpdateBoardBody {
+  title: string;
+  theme: string;
+  id: string;
 }
