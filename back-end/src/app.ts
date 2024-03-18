@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-app.use('/api/boards', boardsRouter);
+app.use('/boards', boardsRouter);
 app.use('/api/cards', cardsRouter);
 
 app.use((req, res: Response) => {

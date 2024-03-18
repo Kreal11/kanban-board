@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const kanbanApi = axios.create({
-  baseURL: "https://kanban-board-zsgc.onrender.com/api/",
+  baseURL: "https://kanban-board-zsgc.onrender.com/",
 });
