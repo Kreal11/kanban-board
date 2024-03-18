@@ -1,13 +1,17 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, HeaderForm, HeaderWrapper, Input } from "./Header.styled";
 import { useNavigate } from "react-router";
+
+type Input = {
+  id: string;
+};
 
 const Header = () => {
   const navigate = useNavigate();
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset } = useForm<Input>();
 
-  const submit = (data: string): void => {
+  const submit: SubmitHandler<Input> = (data): void => {
     reset();
     navigate(`api/boards/${data.id}`);
   };

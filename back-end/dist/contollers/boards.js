@@ -48,7 +48,7 @@ const getBoardById = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     if (!result) {
         throw (0, HttpError_1.default)(404, `Board with ID ${id} not found`);
     }
-    res.json(result);
+    res.json(...result);
 });
 const addBoard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
