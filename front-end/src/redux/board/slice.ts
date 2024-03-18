@@ -4,6 +4,12 @@ import { BoardsState } from "./types";
 
 const initialState: BoardsState = {
   boards: [],
+  board: {
+    _id: "",
+    title: "",
+    theme: "",
+    cards: [],
+  },
   isLoading: false,
   error: null,
 };
@@ -21,9 +27,8 @@ const boardsSlice = createSlice({
         state.error = null;
       })
       .addCase(getBoardByIdThunk.fulfilled, (state, { payload }) => {
-        state.boards = state.boards.filter(
-          (board) => board._id === payload._id
-        );
+        state.board = payload;
+
         state.isLoading = false;
         state.error = null;
       });

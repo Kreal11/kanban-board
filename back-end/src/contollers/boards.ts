@@ -41,7 +41,7 @@ const getBoardById = async (req: Request, res: Response) => {
     if (!result) {
         throw HttpError(404, `Board with ID ${id} not found`);
     }
-    res.json(result);
+    res.json(...result);
 };
 
 const addBoard = async (req: Request, res: Response) => {
