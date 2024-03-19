@@ -7,10 +7,14 @@ import { selectGetBoardById } from "../../redux/board/selectors";
 import { toast } from "react-toastify";
 import {
   BoardWrapper,
+  CardList,
   CardListWrapper,
   CardListsWrapper,
+  CardPlusSvg,
   HomeButton,
 } from "./Board.styled";
+import CardItem from "../../components/cardItem/CardItem";
+import sprite from "../../assets/icons/plus.svg";
 
 const Board = () => {
   const { id } = useParams();
@@ -45,41 +49,33 @@ const Board = () => {
       <CardListsWrapper>
         <CardListWrapper>
           <h2>To Do</h2>
-          <ul>
+          <CardList>
             {toDoCards?.map((card) => (
-              <li key={card._id}>
-                <p>{card.title}</p>
-                <p>{card.description}</p>
-                <p>{card._id}</p>
-              </li>
+              <CardItem key={card._id} {...card} />
             ))}
-          </ul>
+
+            <CardPlusSvg>
+              <use xlinkHref={`${sprite}#icon-plus`} />
+            </CardPlusSvg>
+          </CardList>
         </CardListWrapper>
 
         <CardListWrapper>
           <h2>In Progress</h2>
-          <ul>
+          <CardList>
             {inProgressCards?.map((card) => (
-              <li key={card._id}>
-                <p>{card.title}</p>
-                <p>{card.description}</p>
-                <p>{card._id}</p>
-              </li>
+              <CardItem key={card._id} {...card} />
             ))}
-          </ul>
+          </CardList>
         </CardListWrapper>
 
         <CardListWrapper>
           <h2>Done</h2>
-          <ul>
+          <CardList>
             {doneCards?.map((card) => (
-              <li key={card._id}>
-                <p>{card.title}</p>
-                <p>{card.description}</p>
-                <p>{card._id}</p>
-              </li>
+              <CardItem key={card._id} {...card} />
             ))}
-          </ul>
+          </CardList>
         </CardListWrapper>
       </CardListsWrapper>
     </BoardWrapper>

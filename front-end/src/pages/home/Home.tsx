@@ -30,7 +30,7 @@ const Home = () => {
   return (
     <BoardsWrapper>
       <BoardsList>
-        {(!boards || boards.length === 0) && (
+        {(!boards || !boards.length) && (
           <AddBoardWrapper onClick={openModal}>
             <svg>
               <use xlinkHref={`${sprite}#icon-plus`} />
