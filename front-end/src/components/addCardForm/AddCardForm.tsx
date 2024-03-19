@@ -1,25 +1,28 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { AddForm, FormWrapper } from "./AddBoardForm.styled";
 import { useAppDispatch } from "../../redux/hooks";
-import { addBoardThunk } from "../../redux/board/operations";
 import { FC } from "react";
 import { toast } from "react-toastify";
+import { addCardThunk } from "../../redux/card/operations";
+import { useParams } from "react-router";
+import { AddForm, FormWrapper } from "../addBoardFrom/AddBoardForm.styled";
 
 interface Inputs {
   title: string;
-  theme: string;
+  description: string;
 }
 
-interface AddBoardFormProps {
+interface AddCardFormProps {
   closeModal: () => void;
 }
 
-const AddBoardForm: FC<AddBoardFormProps> = ({ closeModal }) => {
+const AddCardForm: FC<AddCardFormProps> = ({ closeModal }) => {
   const dispatch = useAppDispatch();
+  const { id } = useParams();
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
-  const submit: SubmitHandler<Inputs> = ({ title, theme }) => {
-    dispatch(addBoardThunk({ title, theme }))
+  const submit: SubmitHandler<Inputs> = ({ title, description }) => {
+    console.log(title, description);
+    dispatch(addCardThunk({ title, description, owner: id, status: "toDo" }))
       .unwrap()
       .then(() => {
         toast.success("New board was added successfully!");
@@ -35,22 +38,21 @@ const AddBoardForm: FC<AddBoardFormProps> = ({ closeModal }) => {
 
   return (
     <FormWrapper>
-      <h3>Add info for new board!</h3>
+      <h3>Add info for new card!</h3>
       <AddForm onSubmit={handleSubmit(submit)}>
         <input
           type="text"
           placeholder="Enter title"
           {...register("title", { required: true })}
         />
-        <input
-          type="text"
-          placeholder="Enter theme"
-          {...register("theme", { required: true })}
-        />
+        <textarea
+          placeholder="Add description for your card"
+          {...register("description", { required: true })}
+        ></textarea>
         <button>Submit</button>
       </AddForm>
     </FormWrapper>
   );
 };
 
-export default AddBoardForm;
+export default AddCardForm;

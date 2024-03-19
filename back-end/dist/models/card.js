@@ -15,6 +15,10 @@ const cardSchema = new mongoose_1.Schema({
         required: [true, 'Set description for card'],
     },
     owner: { type: mongoose_1.Schema.Types.ObjectId, ref: 'boards' },
+    status: {
+        type: String,
+        required: [true, 'Set status for card'],
+    },
 }, { versionKey: false, timestamps: true });
 cardSchema.post('save', handleMongooseError_1.default);
 const Card = (0, mongoose_1.model)('card', cardSchema);

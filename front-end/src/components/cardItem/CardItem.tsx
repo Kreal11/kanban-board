@@ -1,9 +1,8 @@
-import { useModal } from "../../hooks/useModal";
 import { ButtonsWrapper } from "../boardItem/BoardItem.styled";
 import { CardInfoWrapper, CardLi } from "./CardItem.styled";
 import sprite from "../../assets/icons/plus.svg";
 import { useAppDispatch } from "../../redux/hooks";
-import { deleteCardThunk, getCardByIdThunk } from "../../redux/card/operations";
+import { deleteCardThunk } from "../../redux/card/operations";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 
@@ -16,7 +15,6 @@ interface CardItemProps {
 const CardItem = ({ title, description, _id }: CardItemProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isOpen, openModal, closeModal } = useModal();
 
   const handleGetCard = (id: string) => {
     navigate(`/cards/${id}`);
@@ -41,7 +39,7 @@ const CardItem = ({ title, description, _id }: CardItemProps) => {
         <p>{description}</p>
       </CardInfoWrapper>
       <ButtonsWrapper>
-        <button onClick={openModal}>
+        <button>
           <svg>
             <use xlinkHref={`${sprite}#icon-edit`} />
           </svg>

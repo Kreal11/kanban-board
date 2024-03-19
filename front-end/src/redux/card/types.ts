@@ -6,6 +6,9 @@ export interface CardState {
   error: string | null;
 }
 
-export interface deleteCardBody {
-  id: string;
+export interface addCardBody {
+  title: string;
+  description: string;
+  owner: string | undefined;
+  status: string;
 }
