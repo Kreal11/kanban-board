@@ -4,7 +4,7 @@ import { kanbanApi } from "../instance";
 
 export const getCardByIdThunk = createAsyncThunk(
   "getCardById",
-  async (_id: string, thunkApi) => {
+  async (_id: string | undefined, thunkApi) => {
     try {
       const { data } = await kanbanApi.get(`cards/${_id}`);
       console.log(data);

@@ -5,6 +5,7 @@ import sprite from "../../assets/icons/plus.svg";
 import { useAppDispatch } from "../../redux/hooks";
 import { getCardByIdThunk } from "../../redux/card/operations";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 interface CardItemProps {
   _id: string;
@@ -14,17 +15,11 @@ interface CardItemProps {
 
 const CardItem = ({ title, description, _id }: CardItemProps) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { isOpen, openModal, closeModal } = useModal();
 
   const handleGetCard = (id: string) => {
-    dispatch(getCardByIdThunk(id))
-      .unwrap()
-      .then(() => {
-        toast.success("Card was loaded successfully!");
-      })
-      .catch(() => {
-        toast.warning("Oops, something went wrong! Try again, please!");
-      });
+    navigate(`cards/${id}`);
   };
 
   return (
