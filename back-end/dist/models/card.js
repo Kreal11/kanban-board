@@ -15,7 +15,7 @@ const cardSchema = new mongoose_1.Schema({
         required: [true, 'Set description for card'],
     },
     owner: { type: mongoose_1.Schema.Types.ObjectId, ref: 'boards' },
-    status: {
+    workStatus: {
         type: String,
         required: [true, 'Set status for card'],
     },

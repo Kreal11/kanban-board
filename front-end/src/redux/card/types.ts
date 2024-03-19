@@ -10,5 +10,5 @@ export interface addCardBody {
   title: string;
   description: string;
   owner: string | undefined;
-  status: string;
+  workStatus: string;
 }

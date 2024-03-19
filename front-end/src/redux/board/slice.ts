@@ -53,7 +53,6 @@ const boardsSlice = createSlice({
       .addCase(
         deleteBoardThunk.fulfilled,
         (state, { payload }: PayloadAction<Board>) => {
-          console.log(payload);
           state.boards = state.boards.filter(
             (board) => board._id !== payload._id
           );
@@ -80,6 +79,8 @@ const boardsSlice = createSlice({
       .addCase(
         addCardThunk.fulfilled,
         (state, { payload }: PayloadAction<Card>) => {
+          console.log(payload);
+
           state.board.cards = [...state.board.cards, payload];
 
           state.isLoading = false;

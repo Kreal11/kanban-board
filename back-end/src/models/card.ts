@@ -5,7 +5,7 @@ interface Card {
     title: string;
     description: string;
     owner: Schema.Types.ObjectId;
-    status: string;
+    workStatus: string;
 }
 
 const cardSchema = new Schema<Card>(
@@ -19,7 +19,7 @@ const cardSchema = new Schema<Card>(
             required: [true, 'Set description for card'],
         },
         owner: { type: Schema.Types.ObjectId, ref: 'boards' },
-        status: {
+        workStatus: {
             type: String,
             required: [true, 'Set status for card'],
         },
