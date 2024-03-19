@@ -1,14 +1,8 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import {
-  deleteCardThunk,
-  getAllCardsThunk,
-  getCardByIdThunk,
-} from "./operations";
+import {  createSlice } from "@reduxjs/toolkit";
+import {  getCardByIdThunk } from "./operations";
 import { CardState } from "./types";
-import { Card } from "../board/types";
 
 const initialState: CardState = {
-  cards: [],
   card: {
     _id: "",
     title: "",
@@ -27,28 +21,12 @@ const cardsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(getAllCardsThunk.fulfilled, (state, { payload }) => {
-        state.cards = payload;
+    builder.addCase(getCardByIdThunk.fulfilled, (state, { payload }) => {
+      state.card = payload;
 
-        state.isLoading = false;
-        state.error = null;
-      })
-      .addCase(getCardByIdThunk.fulfilled, (state, { payload }) => {
-        state.card = payload;
-
-        state.isLoading = false;
-        state.error = null;
-      })
-      .addCase(
-        deleteCardThunk.fulfilled,
-        (state, { payload }: PayloadAction<Card>) => {
-          state.cards = state.cards.filter((card) => card._id !== payload._id);
-
-          state.isLoading = false;
-          state.error = null;
-        }
-      );
+      state.isLoading = false;
+      state.error = null;
+    });
     //   .addCase(
     //     addBoardThunk.fulfilled,
     //     (state, { payload }: PayloadAction<Board>) => {

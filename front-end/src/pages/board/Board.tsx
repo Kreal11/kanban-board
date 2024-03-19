@@ -15,7 +15,6 @@ import {
 } from "./Board.styled";
 import CardItem from "../../components/cardItem/CardItem";
 import sprite from "../../assets/icons/plus.svg";
-import { getAllCardsThunk } from "../../redux/card/operations";
 
 const Board = () => {
   const { id } = useParams();
@@ -23,10 +22,6 @@ const Board = () => {
   const navigate = useNavigate();
 
   const { cards } = useSelector(selectGetBoardById);
-
-  useEffect(() => {
-    dispatch(getAllCardsThunk());
-  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getBoardByIdThunk(id))

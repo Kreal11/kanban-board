@@ -24,7 +24,7 @@ const CardItem = ({ title, description, _id }: CardItemProps) => {
 
   const handleDeleteCard = (id: string) => {
     console.log(id);
-    dispatch(deleteCardThunk({ id }))
+    dispatch(deleteCardThunk(id))
       .unwrap()
       .then(() => {
         toast.success("Card was deleted successfully!");
