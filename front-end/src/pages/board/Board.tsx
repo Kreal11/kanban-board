@@ -43,9 +43,11 @@ const Board = () => {
     navigate("/");
   };
 
-  const toDoCards = cards?.filter((card) => card.status === "toDo");
-  const inProgressCards = cards?.filter((card) => card.status === "inProgress");
-  const doneCards = cards?.filter((card) => card.status === "done");
+  const toDoCards = cards?.filter((card) => card.workStatus === "toDo");
+  const inProgressCards = cards?.filter(
+    (card) => card.workStatus === "inProgress"
+  );
+  const doneCards = cards?.filter((card) => card.workStatus === "done");
 
   return (
     <>

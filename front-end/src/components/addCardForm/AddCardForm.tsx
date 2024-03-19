@@ -19,10 +19,11 @@ const AddCardForm: FC<AddCardFormProps> = ({ closeModal }) => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const { register, handleSubmit, reset } = useForm<Inputs>();
+  const workStatus = "toDo";
 
   const submit: SubmitHandler<Inputs> = ({ title, description }) => {
     console.log(title, description);
-    dispatch(addCardThunk({ title, description, owner: id, status: "toDo" }))
+    dispatch(addCardThunk({ title, description, owner: id, workStatus }))
       .unwrap()
       .then(() => {
         toast.success("New board was added successfully!");

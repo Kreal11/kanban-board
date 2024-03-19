@@ -74,7 +74,7 @@ export const CardPlusSvg = styled.svg`
   cursor: pointer;
   background-color: white;
   border-radius: 8px;
-  padding: 45px 80px;
+  padding: 61px 80px;
   width: 50px;
   height: 50px;
   transition: background-color 0.4s ease-in-out, fill 0.4s ease-in-out;

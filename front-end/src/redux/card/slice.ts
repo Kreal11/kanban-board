@@ -1,5 +1,5 @@
-import {  createSlice } from "@reduxjs/toolkit";
-import {  getCardByIdThunk } from "./operations";
+import { createSlice } from "@reduxjs/toolkit";
+import { getCardByIdThunk } from "./operations";
 import { CardState } from "./types";
 
 const initialState: CardState = {
@@ -10,7 +10,7 @@ const initialState: CardState = {
     owner: "",
     createdAt: "",
     updatedAt: "",
-    status: "",
+    workStatus: "",
   },
   isLoading: false,
   error: null,

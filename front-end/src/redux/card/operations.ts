@@ -22,6 +22,7 @@ export const getCardByIdThunk = createAsyncThunk(
 export const addCardThunk = createAsyncThunk(
   "addCard",
   async (body: addCardBody, thunkApi) => {
+    console.log(body);
     try {
       const { data } = await kanbanApi.post("cards", body);
       console.log(data);
