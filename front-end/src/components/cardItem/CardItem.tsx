@@ -19,14 +19,14 @@ const CardItem = ({ title, description, _id }: CardItemProps) => {
   const { isOpen, openModal, closeModal } = useModal();
 
   const handleGetCard = (id: string) => {
-    navigate(`cards/${id}`);
+    navigate(`/cards/${id}`);
   };
 
   return (
     <CardLi>
       <CardInfoWrapper onClick={() => handleGetCard(_id)}>
         <h3>{title}</h3>
-        <p>Description: {description}</p>
+        <p>{description}</p>
       </CardInfoWrapper>
       <ButtonsWrapper>
         <button onClick={openModal}>

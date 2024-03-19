@@ -27,5 +27,15 @@ export const CardInfoWrapper = styled.div`
 
   h3 {
     margin-bottom: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    max-height: 60px;
   }
 `;

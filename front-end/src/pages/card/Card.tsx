@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getCardByIdThunk } from "../../redux/card/operations";
 import { toast } from "react-toastify";
@@ -8,6 +8,8 @@ import { selectGetCard } from "../../redux/card/selectors";
 const Card = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const { title, description } = useAppSelector(selectGetCard);
 
   useEffect(() => {
@@ -21,10 +23,15 @@ const Card = () => {
       });
   }, [dispatch, id]);
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div>
+      <button onClick={handleGoBack}>↩ Home</button>
       <h3>{title}</h3>
-      <p>{description}</p>
+      <p>Description: {description}</p>
     </div>
   );
 };
