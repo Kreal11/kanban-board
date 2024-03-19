@@ -31,7 +31,7 @@ const Card = () => {
     <div>
       <button onClick={handleGoBack}>↩ Home</button>
       <h3>{title}</h3>
-      <p>{description}</p>
+      <p>Description: {description}</p>
     </div>
   );
 };

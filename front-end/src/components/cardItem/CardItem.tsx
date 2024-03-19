@@ -26,7 +26,7 @@ const CardItem = ({ title, description, _id }: CardItemProps) => {
     <CardLi>
       <CardInfoWrapper onClick={() => handleGetCard(_id)}>
         <h3>{title}</h3>
-        <p>Description: {description}</p>
+        <p>{description}</p>
       </CardInfoWrapper>
       <ButtonsWrapper>
         <button onClick={openModal}>
