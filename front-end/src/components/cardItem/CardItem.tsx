@@ -19,7 +19,7 @@ const CardItem = ({ title, description, _id }: CardItemProps) => {
   const { isOpen, openModal, closeModal } = useModal();
 
   const handleGetCard = (id: string) => {
-    navigate(`cards/${id}`);
+    navigate(`/cards/${id}`);
   };
 
   return (
