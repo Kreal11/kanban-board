@@ -29,7 +29,7 @@ const addCard = async (req: Request, res: Response) => {
 };
 
 const deleteCard = async (req: Request, res: Response) => {
-    const { id } = req.body;
+    const { id } = req.query;
 
     const deletedCard = await Card.findByIdAndDelete(id);
     if (!deletedCard) {

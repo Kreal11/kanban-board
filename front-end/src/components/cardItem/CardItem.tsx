@@ -23,6 +23,7 @@ const CardItem = ({ title, description, _id }: CardItemProps) => {
   };
 
   const handleDeleteCard = (id: string) => {
+    console.log(id);
     dispatch(deleteCardThunk({ id }))
       .unwrap()
       .then(() => {

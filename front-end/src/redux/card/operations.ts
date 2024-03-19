@@ -54,8 +54,13 @@ export const getCardByIdThunk = createAsyncThunk(
 export const deleteCardThunk = createAsyncThunk(
   "deleteCardById",
   async (body: deleteCardBody, thunkApi) => {
+    console.log(body);
     try {
-      const { data } = await kanbanApi.delete("cards", body);
+      const { data } = await kanbanApi.delete("cards", {
+        params: {
+          id: body.id,
+        },
+      });
       console.log(data);
       return data;
     } catch (error) {

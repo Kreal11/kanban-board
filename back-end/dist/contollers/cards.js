@@ -32,7 +32,7 @@ const addCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(201).json(createdCard);
 });
 const deleteCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.body;
+    const { id } = req.query;
     const deletedCard = yield card_1.default.findByIdAndDelete(id);
     if (!deletedCard) {
         throw (0, HttpError_1.default)(404, `Card with ID ${id} not found`);
