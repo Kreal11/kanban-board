@@ -37,4 +37,17 @@ export const UpdateForm = styled.form`
     outline: none;
     font-size: 20px;
   }
+
+  textarea {
+    box-sizing: border-box;
+    padding: 10px 20px;
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-family: "Arial";
+    max-width: 283.5px;
+    min-height: 100px;
+  }
 `;

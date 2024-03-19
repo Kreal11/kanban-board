@@ -15,16 +15,13 @@ if (!rootElement) {
   throw new Error(`Element with ${rootElementId} doesn't exist`);
 }
 
-//need to add basename="https://monkey-plant.onrender.com/ in BrowserRouter"
-
 ReactDOM.createRoot(rootElement).render(
   <BrowserRouter basename="">
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ToastContainer
           position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
+          autoClose={3000}
           newestOnTop={false}
           closeOnClick
           rtl={false}
