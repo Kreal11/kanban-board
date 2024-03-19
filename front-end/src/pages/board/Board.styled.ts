@@ -26,7 +26,6 @@ export const BoardWrapper = styled.div`
 export const CardListsWrapper = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
   max-width: 800px;
   margin: 0 auto;
   gap: 50px;
@@ -35,4 +34,8 @@ export const CardListsWrapper = styled.div`
 export const CardListWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
+  h2 {
+    margin-bottom: 30px;
+  }
 `;
