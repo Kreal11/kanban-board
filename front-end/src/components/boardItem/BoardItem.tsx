@@ -6,6 +6,7 @@ import { deleteBoardThunk } from "../../redux/board/operations";
 import { useModal } from "../../hooks/useModal";
 import Modal from "../modal/Modal";
 import UpdateBoardForm from "../updateBoardForm/UpdateBoardForm";
+import { toast } from "react-toastify";
 
 interface BoardItemProps {
   title: string;
@@ -23,7 +24,14 @@ const BoardItem = ({ title, theme, _id }: BoardItemProps) => {
   };
 
   const hanldeDeleteBoard = (id: string) => {
-    dispatch(deleteBoardThunk(id));
+    dispatch(deleteBoardThunk(id))
+      .unwrap()
+      .then(() => {
+        toast.success("Board was deleted successfully!");
+      })
+      .catch(() => {
+        toast.warning("Oops, something went wrong! Try again, please!");
+      });
   };
 
   return (

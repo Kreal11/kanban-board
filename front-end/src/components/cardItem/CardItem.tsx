@@ -4,6 +4,7 @@ import { CardInfoWrapper, CardLi } from "./CardItem.styled";
 import sprite from "../../assets/icons/plus.svg";
 import { useAppDispatch } from "../../redux/hooks";
 import { getCardByIdThunk } from "../../redux/card/operations";
+import { toast } from "react-toastify";
 
 interface CardItemProps {
   _id: string;
@@ -16,7 +17,14 @@ const CardItem = ({ title, description, _id }: CardItemProps) => {
   const { isOpen, openModal, closeModal } = useModal();
 
   const handleGetCard = (id: string) => {
-    dispatch(getCardByIdThunk(id));
+    dispatch(getCardByIdThunk(id))
+      .unwrap()
+      .then(() => {
+        toast.success("Card was loaded successfully!");
+      })
+      .catch(() => {
+        toast.warning("Oops, something went wrong! Try again, please!");
+      });
   };
 
   return (

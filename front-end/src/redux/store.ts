@@ -11,6 +11,7 @@ import {
 } from "redux-persist";
 import { boardsReducer } from "./board/slice";
 import storage from "redux-persist/lib/storage";
+import { cardsReducer } from "./card/slice";
 // import { authReducer } from "./auth/authSlice";
 
 const authPersistConfig = {
@@ -22,6 +23,7 @@ const authPersistConfig = {
 const rootReducer = combineReducers({
   //   auth: persistReducer(authPersistConfig, authReducer),
   boards: persistReducer(authPersistConfig, boardsReducer),
+  cards: cardsReducer,
 });
 
 export const store = configureStore({
