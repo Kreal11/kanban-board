@@ -7,6 +7,7 @@ import {
   updateBoardThunk,
 } from "./operations";
 import { Board, BoardsState } from "./types";
+import { deleteCardThunk } from "../card/operations";
 
 const initialState: BoardsState = {
   boards: [],
@@ -70,6 +71,17 @@ const boardsSlice = createSlice({
           if (updatedBoardIndex !== -1) {
             state.boards[updatedBoardIndex] = payload;
           }
+
+          state.isLoading = false;
+          state.error = null;
+        }
+      )
+      .addCase(
+        deleteCardThunk.fulfilled,
+        (state, { payload }: PayloadAction<Board>) => {
+          state.board = state.board.cards.filter(
+            (card) => card._id !== payload._id
+          );
 
           state.isLoading = false;
           state.error = null;

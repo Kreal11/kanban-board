@@ -6,7 +6,6 @@ export const CardLi = styled.li`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 20px;
   height: 160px;
   background-color: white;
   color: black;
