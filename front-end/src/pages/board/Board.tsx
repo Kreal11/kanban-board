@@ -28,7 +28,6 @@ const Board = () => {
   const { isOpen, openModal, closeModal } = useModal();
 
   const { cards } = useSelector(selectGetBoardById);
-  console.log(cards);
 
   useEffect(() => {
     dispatch(getBoardByIdThunk(id))
@@ -64,26 +63,28 @@ const Board = () => {
     }
 
     // Найдем список, из которого была перемещена карточка
-    const startList = cards.find(
+    const startList = cards.filter(
       (card) => card.workStatus === source.droppableId
     );
 
     // Найдем список, в который была перемещена карточка
-    const endList = cards.find(
+    const endList = cards.filter(
       (card) => card.workStatus === destination.droppableId
     );
 
     // Создадим копию массива карточек из начального списка
-    const newStartList = Array.from(startList.cards);
+    const newStartList = [...startList];
 
     // Удалим перемещаемую карточку из начального списка
     const [movedCard] = newStartList.splice(source.index, 1);
+    const newMovedCard = { ...movedCard };
+    console.log(destination.droppableId);
 
     // Обновим индекс перемещенной карточки в соответствии с новым списком
-    movedCard.index = destination.index;
+    newMovedCard.index = destination.index;
 
     // Добавим перемещенную карточку в конечный список
-    endList.cards.splice(destination.index, 0, movedCard);
+    endList.splice(destination.index, 0, newMovedCard);
 
     // Обновим состояние вашего приложения, например, отправим запрос на сервер для сохранения изменений
     // dispatch(updateCardPositionThunk(movedCard, endList._id));
@@ -114,6 +115,7 @@ const Board = () => {
                     {toDoCards?.map((card, index) => (
                       <CardItem key={card._id} {...card} index={index} />
                     ))}
+                    {provided.placeholder}
                   </CardList>
                 </CardListWrapper>
               )}
@@ -130,6 +132,7 @@ const Board = () => {
                     {inProgressCards?.map((card, index) => (
                       <CardItem key={card._id} {...card} index={index} />
                     ))}
+                    {provided.placeholder}
                   </CardList>
                 </CardListWrapper>
               )}
@@ -146,6 +149,7 @@ const Board = () => {
                     {doneCards?.map((card, index) => (
                       <CardItem key={card._id} {...card} index={index} />
                     ))}
+                    {provided.placeholder}
                   </CardList>
                 </CardListWrapper>
               )}
