@@ -4,8 +4,8 @@ export interface Card {
   description: string;
   owner: string;
   status: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Board {

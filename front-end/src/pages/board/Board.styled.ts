@@ -43,18 +43,38 @@ export const CardListWrapper = styled.div`
 `;
 
 export const CardList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   padding: 10px;
   background-color: grey;
-  width: 250px;
+  width: 210px;
   border-radius: 8px;
   min-height: 400px;
+  /* max-height: 700px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 16px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 16px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 16px;
+  } */
 `;
 
 export const CardPlusSvg = styled.svg`
   cursor: pointer;
   background-color: white;
   border-radius: 8px;
-  padding: 45px 100px;
+  padding: 45px 80px;
   width: 50px;
   height: 50px;
   transition: background-color 0.4s ease-in-out, fill 0.4s ease-in-out;

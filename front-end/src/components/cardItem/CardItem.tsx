@@ -3,7 +3,7 @@ import { ButtonsWrapper } from "../boardItem/BoardItem.styled";
 import { CardInfoWrapper, CardLi } from "./CardItem.styled";
 import sprite from "../../assets/icons/plus.svg";
 import { useAppDispatch } from "../../redux/hooks";
-import { getCardByIdThunk } from "../../redux/card/operations";
+import { deleteCardThunk, getCardByIdThunk } from "../../redux/card/operations";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 
@@ -22,6 +22,17 @@ const CardItem = ({ title, description, _id }: CardItemProps) => {
     navigate(`/cards/${id}`);
   };
 
+  const handleDeleteCard = (id: string) => {
+    dispatch(deleteCardThunk({ id }))
+      .unwrap()
+      .then(() => {
+        toast.success("Card was deleted successfully!");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <CardLi>
       <CardInfoWrapper onClick={() => handleGetCard(_id)}>
@@ -34,7 +45,7 @@ const CardItem = ({ title, description, _id }: CardItemProps) => {
             <use xlinkHref={`${sprite}#icon-edit`} />
           </svg>
         </button>
-        <button>
+        <button onClick={() => handleDeleteCard(_id)}>
           <svg>
             <use xlinkHref={`${sprite}#icon-delete`} />
           </svg>
