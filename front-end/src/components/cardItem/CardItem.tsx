@@ -8,14 +8,16 @@ import { useNavigate } from "react-router";
 import { useModal } from "../../hooks/useModal";
 import Modal from "../modal/Modal";
 import UpdateCardForm from "../updateCardForm/UpdateCardForm";
+import { Draggable } from "react-beautiful-dnd";
 
 interface CardItemProps {
   _id: string;
   title: string;
   description: string;
+  index: number;
 }
 
-const CardItem = ({ title, description, _id }: CardItemProps) => {
+const CardItem = ({ title, description, _id, index }: CardItemProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isOpen, openModal, closeModal } = useModal();
@@ -37,24 +39,32 @@ const CardItem = ({ title, description, _id }: CardItemProps) => {
 
   return (
     <>
-      <CardLi>
-        <CardInfoWrapper onClick={() => handleGetCard(_id)}>
-          <h3>{title}</h3>
-          <p>{description}</p>
-        </CardInfoWrapper>
-        <ButtonsWrapper>
-          <button onClick={openModal}>
-            <svg>
-              <use xlinkHref={`${sprite}#icon-edit`} />
-            </svg>
-          </button>
-          <button onClick={() => handleDeleteCard(_id)}>
-            <svg>
-              <use xlinkHref={`${sprite}#icon-delete`} />
-            </svg>
-          </button>
-        </ButtonsWrapper>
-      </CardLi>
+      <Draggable draggableId={_id} index={index}>
+        {(provided) => (
+          <CardLi
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            <CardInfoWrapper onClick={() => handleGetCard(_id)}>
+              <h3>{title}</h3>
+              <p>{description}</p>
+            </CardInfoWrapper>
+            <ButtonsWrapper>
+              <button onClick={openModal}>
+                <svg>
+                  <use xlinkHref={`${sprite}#icon-edit`} />
+                </svg>
+              </button>
+              <button onClick={() => handleDeleteCard(_id)}>
+                <svg>
+                  <use xlinkHref={`${sprite}#icon-delete`} />
+                </svg>
+              </button>
+            </ButtonsWrapper>
+          </CardLi>
+        )}
+      </Draggable>
       {isOpen && (
         <Modal closeModal={closeModal}>
           <UpdateCardForm

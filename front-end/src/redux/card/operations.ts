@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { kanbanApi } from "../instance";
 import { addCardBody, updateCardBody } from "./types";
-// import { AddBoardBody, UpdateBoardBody } from "./types";
 
 export const getCardByIdThunk = createAsyncThunk(
   "getCardById",
