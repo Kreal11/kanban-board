@@ -12,3 +12,8 @@ export interface addCardBody {
   owner: string | undefined;
   workStatus: string;
 }
+export interface updateCardBody {
+  title: string;
+  description: string;
+  id: string;
+}

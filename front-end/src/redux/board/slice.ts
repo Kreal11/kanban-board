@@ -7,7 +7,11 @@ import {
   updateBoardThunk,
 } from "./operations";
 import { Board, BoardsState, Card } from "./types";
-import { addCardThunk, deleteCardThunk } from "../card/operations";
+import {
+  addCardThunk,
+  deleteCardThunk,
+  updateCardThunk,
+} from "../card/operations";
 
 const initialState: BoardsState = {
   boards: [],
@@ -79,8 +83,6 @@ const boardsSlice = createSlice({
       .addCase(
         addCardThunk.fulfilled,
         (state, { payload }: PayloadAction<Card>) => {
-          console.log(payload);
-
           state.board.cards = [...state.board.cards, payload];
 
           state.isLoading = false;
@@ -89,10 +91,25 @@ const boardsSlice = createSlice({
       )
       .addCase(
         deleteCardThunk.fulfilled,
-        (state, { payload }: PayloadAction<Board>) => {
+        (state, { payload }: PayloadAction<Card>) => {
           state.board.cards = state.board.cards.filter(
             (card) => card._id !== payload._id
           );
+
+          state.isLoading = false;
+          state.error = null;
+        }
+      )
+      .addCase(
+        updateCardThunk.fulfilled,
+        (state, { payload }: PayloadAction<Card>) => {
+          const updatedCardIndex = state.board.cards.findIndex(
+            (card) => card._id === payload._id
+          );
+
+          if (updatedCardIndex !== -1) {
+            state.board.cards[updatedCardIndex] = payload;
+          }
 
           state.isLoading = false;
           state.error = null;

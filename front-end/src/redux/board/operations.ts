@@ -39,7 +39,7 @@ export const addBoardThunk = createAsyncThunk(
   async (body: AddBoardBody, thunkApi) => {
     try {
       const { data } = await kanbanApi.post("boards", body);
-      console.log(data);
+
       return data;
     } catch (error) {
       if (error instanceof Error && typeof error.message === "string") {
@@ -55,7 +55,7 @@ export const deleteBoardThunk = createAsyncThunk(
   async (_id: string, thunkApi) => {
     try {
       const { data } = await kanbanApi.delete(`/boards/${_id}`);
-      console.log(data);
+
       return data;
     } catch (error) {
       if (error instanceof Error && typeof error.message === "string") {

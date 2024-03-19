@@ -22,7 +22,6 @@ const AddCardForm: FC<AddCardFormProps> = ({ closeModal }) => {
   const workStatus = "toDo";
 
   const submit: SubmitHandler<Inputs> = ({ title, description }) => {
-    console.log(title, description);
     dispatch(addCardThunk({ title, description, owner: id, workStatus }))
       .unwrap()
       .then(() => {
@@ -31,9 +30,7 @@ const AddCardForm: FC<AddCardFormProps> = ({ closeModal }) => {
         closeModal();
       })
       .catch(() => {
-        toast.warning(
-          "Oops, something went wrong! Maybe, board with this title already exists. Try to change it! Otherwise try again, please!"
-        );
+        toast.warning("Oops, something went wrong! Try again, please!");
       });
   };
 
