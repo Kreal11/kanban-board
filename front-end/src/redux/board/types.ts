@@ -12,7 +12,7 @@ export interface Board {
   _id: string;
   title: string;
   theme: string;
-  cards?: Card[] | [];
+  cards: Card[] | [];
   createdAt: string;
   updatedAt: string;
 }

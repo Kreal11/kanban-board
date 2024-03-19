@@ -79,7 +79,7 @@ const boardsSlice = createSlice({
       .addCase(
         deleteCardThunk.fulfilled,
         (state, { payload }: PayloadAction<Board>) => {
-          state.board = state.board.cards.filter(
+          state.board.cards = state.board.cards.filter(
             (card) => card._id !== payload._id
           );
 
