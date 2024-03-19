@@ -12,6 +12,14 @@ const getAllCards = async (req: Request, res: Response) => {
     res.json({ data });
 };
 
+const getCardById = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const card = await Card.findById(id);
+
+    res.json(card);
+};
+
 const addCard = async (req: Request, res: Response) => {
     const body = req.body;
 
@@ -47,6 +55,7 @@ const updateCard = async (req: Request, res: Response) => {
 
 export default {
     getAllCards: ctrlWrapper(getAllCards),
+    getCardById: ctrlWrapper(getCardById),
     addCard: ctrlWrapper(addCard),
     deleteCard: ctrlWrapper(deleteCard),
     updateCard: ctrlWrapper(updateCard),
