@@ -1,29 +1,38 @@
 import styled from "styled-components";
 
-export const NavBoardWrapper = styled.div`
+export const HomeButton = styled.button`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin-left: 0;
+  margin-bottom: 40px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+
+  transition: background-color 0.4s ease-in-out;
+
+  &:hover {
+    background-color: darkslategray;
+  }
+`;
+
+export const BoardWrapper = styled.div`
   max-width: 800px;
   margin: 0 auto;
-  margin-bottom: 40px;
+`;
 
-  button {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    border-radius: 8px;
-    border: none;
-    padding: 8px;
-    transition: background-color 0.4s ease-in-out;
+export const CardListsWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  gap: 50px;
+`;
 
-    &:hover {
-      background-color: darkslategray;
-    }
-  }
-
-  svg {
-    width: 20px;
-    height: 20px;
-  }
+export const CardListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
