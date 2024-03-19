@@ -5,13 +5,19 @@ import { getBoardByIdThunk } from "../../redux/board/operations";
 import { useSelector } from "react-redux";
 import { selectGetBoardById } from "../../redux/board/selectors";
 import { toast } from "react-toastify";
+import {
+  BoardWrapper,
+  CardListWrapper,
+  CardListsWrapper,
+  HomeButton,
+} from "./Board.styled";
 
 const Board = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { _id, title, theme, cards } = useSelector(selectGetBoardById);
+  const { cards } = useSelector(selectGetBoardById);
 
   useEffect(() => {
     dispatch(getBoardByIdThunk(id))
@@ -28,25 +34,55 @@ const Board = () => {
     navigate("/");
   };
 
-  return (
-    <div>
-      <button onClick={handleGoHome}>↩ Home</button>
+  const toDoCards = cards?.filter((card) => card.status === "toDo");
+  const inProgressCards = cards?.filter((card) => card.status === "inProgress");
+  const doneCards = cards?.filter((card) => card.status === "done");
 
-      <div>
-        <p>{_id}</p>
-        <p>{title}</p>
-        <p>{theme}</p>
-        <ul>
-          {cards?.map((card) => (
-            <li key={card._id}>
-              <p>{card._id}</p>
-              <p>{card.title}</p>
-              <p>{card.description}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+  return (
+    <BoardWrapper>
+      <HomeButton onClick={handleGoHome}>↩ Home</HomeButton>
+
+      <CardListsWrapper>
+        <CardListWrapper>
+          <h2>To Do</h2>
+          <ul>
+            {toDoCards?.map((card) => (
+              <li key={card._id}>
+                <p>{card.title}</p>
+                <p>{card.description}</p>
+                <p>{card._id}</p>
+              </li>
+            ))}
+          </ul>
+        </CardListWrapper>
+
+        <CardListWrapper>
+          <h2>In Progress</h2>
+          <ul>
+            {inProgressCards?.map((card) => (
+              <li key={card._id}>
+                <p>{card.title}</p>
+                <p>{card.description}</p>
+                <p>{card._id}</p>
+              </li>
+            ))}
+          </ul>
+        </CardListWrapper>
+
+        <CardListWrapper>
+          <h2>Done</h2>
+          <ul>
+            {doneCards?.map((card) => (
+              <li key={card._id}>
+                <p>{card.title}</p>
+                <p>{card.description}</p>
+                <p>{card._id}</p>
+              </li>
+            ))}
+          </ul>
+        </CardListWrapper>
+      </CardListsWrapper>
+    </BoardWrapper>
   );
 };
 
