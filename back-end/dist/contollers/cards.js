@@ -21,6 +21,11 @@ const getAllCards = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     // if not needed - find({}, '-name -email etc')
     res.json({ data });
 });
+const getCardById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const card = yield card_1.default.findById(id);
+    res.json(card);
+});
 const addCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     const createdCard = yield card_1.default.create(Object.assign({}, body));
@@ -48,6 +53,7 @@ const updateCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.default = {
     getAllCards: (0, ctrlWrapper_1.default)(getAllCards),
+    getCardById: (0, ctrlWrapper_1.default)(getCardById),
     addCard: (0, ctrlWrapper_1.default)(addCard),
     deleteCard: (0, ctrlWrapper_1.default)(deleteCard),
     updateCard: (0, ctrlWrapper_1.default)(updateCard),

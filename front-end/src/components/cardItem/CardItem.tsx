@@ -2,6 +2,8 @@ import { useModal } from "../../hooks/useModal";
 import { ButtonsWrapper } from "../boardItem/BoardItem.styled";
 import { CardInfoWrapper, CardLi } from "./CardItem.styled";
 import sprite from "../../assets/icons/plus.svg";
+import { useAppDispatch } from "../../redux/hooks";
+import { getCardByIdThunk } from "../../redux/card/operations";
 
 interface CardItemProps {
   _id: string;
@@ -10,13 +12,16 @@ interface CardItemProps {
 }
 
 const CardItem = ({ title, description, _id }: CardItemProps) => {
+  const dispatch = useAppDispatch();
   const { isOpen, openModal, closeModal } = useModal();
 
-  //   const;
+  const handleGetCard = (id: string) => {
+    dispatch(getCardByIdThunk(id));
+  };
 
   return (
     <CardLi>
-      <CardInfoWrapper>
+      <CardInfoWrapper onClick={() => handleGetCard(_id)}>
         <h3>{title}</h3>
         <p>Description: {description}</p>
       </CardInfoWrapper>
