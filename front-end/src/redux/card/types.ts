@@ -1,12 +1,14 @@
 import { Card } from "../board/types";
 
 export interface CardState {
-  cards: Card[];
   card: Card;
   isLoading: boolean;
   error: string | null;
 }
 
-export interface deleteCardBody {
-  id: string;
+export interface addCardBody {
+  title: string;
+  description: string;
+  owner: string | undefined;
+  status: string;
 }

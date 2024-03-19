@@ -15,18 +15,18 @@ import {
 } from "./Board.styled";
 import CardItem from "../../components/cardItem/CardItem";
 import sprite from "../../assets/icons/plus.svg";
-import { getAllCardsThunk } from "../../redux/card/operations";
+import Modal from "../../components/modal/Modal";
+import AddCardForm from "../../components/addCardForm/AddCardForm";
+import { useModal } from "../../hooks/useModal";
 
 const Board = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { cards } = useSelector(selectGetBoardById);
+  const { isOpen, openModal, closeModal } = useModal();
 
-  useEffect(() => {
-    dispatch(getAllCardsThunk());
-  }, [dispatch]);
+  const { cards } = useSelector(selectGetBoardById);
 
   useEffect(() => {
     dispatch(getBoardByIdThunk(id))
@@ -48,42 +48,49 @@ const Board = () => {
   const doneCards = cards?.filter((card) => card.status === "done");
 
   return (
-    <BoardWrapper>
-      <HomeButton onClick={handleGoHome}>↩ Home</HomeButton>
+    <>
+      <BoardWrapper>
+        <HomeButton onClick={handleGoHome}>↩ Home</HomeButton>
 
-      <CardListsWrapper>
-        <CardListWrapper>
-          <h2>To Do</h2>
-          <CardList>
-            <CardPlusSvg>
-              <use xlinkHref={`${sprite}#icon-plus`} />
-            </CardPlusSvg>
+        <CardListsWrapper>
+          <CardListWrapper>
+            <h2>To Do</h2>
+            <CardList>
+              <CardPlusSvg onClick={openModal}>
+                <use xlinkHref={`${sprite}#icon-plus`} />
+              </CardPlusSvg>
 
-            {toDoCards?.map((card) => (
-              <CardItem key={card._id} {...card} />
-            ))}
-          </CardList>
-        </CardListWrapper>
+              {toDoCards?.map((card) => (
+                <CardItem key={card._id} {...card} />
+              ))}
+            </CardList>
+          </CardListWrapper>
 
-        <CardListWrapper>
-          <h2>In Progress</h2>
-          <CardList>
-            {inProgressCards?.map((card) => (
-              <CardItem key={card._id} {...card} />
-            ))}
-          </CardList>
-        </CardListWrapper>
+          <CardListWrapper>
+            <h2>In Progress</h2>
+            <CardList>
+              {inProgressCards?.map((card) => (
+                <CardItem key={card._id} {...card} />
+              ))}
+            </CardList>
+          </CardListWrapper>
 
-        <CardListWrapper>
-          <h2>Done</h2>
-          <CardList>
-            {doneCards?.map((card) => (
-              <CardItem key={card._id} {...card} />
-            ))}
-          </CardList>
-        </CardListWrapper>
-      </CardListsWrapper>
-    </BoardWrapper>
+          <CardListWrapper>
+            <h2>Done</h2>
+            <CardList>
+              {doneCards?.map((card) => (
+                <CardItem key={card._id} {...card} />
+              ))}
+            </CardList>
+          </CardListWrapper>
+        </CardListsWrapper>
+      </BoardWrapper>
+      {isOpen && (
+        <Modal closeModal={closeModal}>
+          <AddCardForm closeModal={closeModal} />
+        </Modal>
+      )}
+    </>
   );
 };
 
