@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
-export const BoardButtonsWrapper = styled.div`
+export const ButtonsWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
+  gap: 14px;
 
   button {
     display: inline-flex;
@@ -17,12 +18,14 @@ export const BoardButtonsWrapper = styled.div`
 
     &:hover {
       background-color: darkslategray;
+      fill: white;
     }
   }
 
   svg {
     width: 20px;
     height: 20px;
+    transition: fill 0.4s ease-in-out;
   }
 `;
 

@@ -1,10 +1,6 @@
 import { useNavigate } from "react-router";
 import sprite from "../../assets/icons/plus.svg";
-import {
-  BoardButtonsWrapper,
-  BoardInfoWrapper,
-  BoardLi,
-} from "./BoardItem.styled";
+import { BoardInfoWrapper, BoardLi, ButtonsWrapper } from "./BoardItem.styled";
 import { useAppDispatch } from "../../redux/hooks";
 import { deleteBoardThunk } from "../../redux/board/operations";
 import { useModal } from "../../hooks/useModal";
@@ -40,20 +36,18 @@ const BoardItem = ({ title, theme, _id }: BoardItemProps) => {
           </div>
           <p>{_id}</p>
         </BoardInfoWrapper>
-        <BoardButtonsWrapper>
+        <ButtonsWrapper>
           <button onClick={openModal}>
             <svg>
               <use xlinkHref={`${sprite}#icon-edit`} />
             </svg>
-            Edit
           </button>
           <button onClick={() => hanldeDeleteBoard(_id)}>
             <svg>
               <use xlinkHref={`${sprite}#icon-delete`} />
             </svg>
-            Delete
           </button>
-        </BoardButtonsWrapper>
+        </ButtonsWrapper>
       </BoardLi>
       {isOpen && (
         <Modal closeModal={closeModal}>
