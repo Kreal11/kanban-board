@@ -17,7 +17,7 @@ const initialState: CardState = {
 };
 
 const cardsSlice = createSlice({
-  name: "boards",
+  name: "cards",
   initialState,
   reducers: {},
   extraReducers: (builder) => {

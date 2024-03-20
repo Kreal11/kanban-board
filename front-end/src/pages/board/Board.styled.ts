@@ -50,24 +50,7 @@ export const CardList = styled.ul`
   background-color: grey;
   width: 210px;
   border-radius: 8px;
-  min-height: 400px;
-  /* max-height: 700px;
-  overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-    border-radius: 16px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: white;
-    border-radius: 16px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: transparent;
-    border-radius: 16px;
-  } */
+  min-height: 700px;
 `;
 
 export const CardPlusSvg = styled.svg`

@@ -73,10 +73,11 @@ export const updateBoardThunk = createAsyncThunk(
       const { data } = await kanbanApi.patch("boards", body);
 
       return data;
-    } catch (error: unknown) {
-      return thunkApi.rejectWithValue(
-        `${(error as Error)?.message ?? "Unknown error"}`
-      );
+    } catch (error) {
+      if (error instanceof Error && typeof error.message === "string") {
+        return thunkApi.rejectWithValue(error.message);
+      }
+      return thunkApi.rejectWithValue(`An unknown error occurred: ${error}`);
     }
   }
 );
