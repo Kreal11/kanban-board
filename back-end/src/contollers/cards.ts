@@ -17,6 +17,10 @@ const getCardById = async (req: Request, res: Response) => {
 
     const card = await Card.findById(id);
 
+    if (!card) {
+        throw HttpError(404, `Card with ID ${id} not found`);
+    }
+
     res.json(card);
 };
 
@@ -53,10 +57,24 @@ const updateCard = async (req: Request, res: Response) => {
     res.json(updatedCard);
 };
 
+const updateCardWorkStatus = async (req: Request, res: Response) => {
+    const { id } = req.body;
+    const body = req.body;
+
+    const updatedCardWorkStatus = await Card.findByIdAndUpdate(id, body, {
+        new: true,
+    });
+    if (!updatedCardWorkStatus) {
+        throw HttpError(404, `Book with ID ${id} not found`);
+    }
+    res.json(updatedCardWorkStatus);
+};
+
 export default {
     getAllCards: ctrlWrapper(getAllCards),
     getCardById: ctrlWrapper(getCardById),
     addCard: ctrlWrapper(addCard),
     deleteCard: ctrlWrapper(deleteCard),
     updateCard: ctrlWrapper(updateCard),
+    updateCardWorkStatus: ctrlWrapper(updateCardWorkStatus),
 };

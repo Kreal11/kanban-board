@@ -29,7 +29,7 @@ const Card = () => {
 
   return (
     <div>
-      <button onClick={handleGoBack}>↩ Home</button>
+      <button onClick={handleGoBack}>↩ Back</button>
       <h3>{title}</h3>
       <p>Description: {description}</p>
     </div>

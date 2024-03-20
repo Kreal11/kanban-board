@@ -24,6 +24,9 @@ const getAllCards = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 const getCardById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const card = yield card_1.default.findById(id);
+    if (!card) {
+        throw (0, HttpError_1.default)(404, `Card with ID ${id} not found`);
+    }
     res.json(card);
 });
 const addCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -51,10 +54,22 @@ const updateCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     res.json(updatedCard);
 });
+const updateCardWorkStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.body;
+    const body = req.body;
+    const updatedCardWorkStatus = yield card_1.default.findByIdAndUpdate(id, body, {
+        new: true,
+    });
+    if (!updatedCardWorkStatus) {
+        throw (0, HttpError_1.default)(404, `Book with ID ${id} not found`);
+    }
+    res.json(updatedCardWorkStatus);
+});
 exports.default = {
     getAllCards: (0, ctrlWrapper_1.default)(getAllCards),
     getCardById: (0, ctrlWrapper_1.default)(getCardById),
     addCard: (0, ctrlWrapper_1.default)(addCard),
     deleteCard: (0, ctrlWrapper_1.default)(deleteCard),
     updateCard: (0, ctrlWrapper_1.default)(updateCard),
+    updateCardWorkStatus: (0, ctrlWrapper_1.default)(updateCardWorkStatus),
 };
