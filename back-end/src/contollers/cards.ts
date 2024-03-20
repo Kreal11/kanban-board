@@ -8,7 +8,6 @@ const getAllCards = async (req: Request, res: Response) => {
 
     const data = await Card.find({ owner: id });
 
-    // if not needed - find({}, '-name -email etc')
     res.json({ data });
 };
 
@@ -40,7 +39,6 @@ const deleteCard = async (req: Request, res: Response) => {
         throw HttpError(404, `Card with ID ${id} not found`);
     }
     res.json(deletedCard);
-    // res.status(204).send();
 };
 
 const updateCard = async (req: Request, res: Response) => {
@@ -65,9 +63,22 @@ const updateCardWorkStatus = async (req: Request, res: Response) => {
         new: true,
     });
     if (!updatedCardWorkStatus) {
-        throw HttpError(404, `Book with ID ${id} not found`);
+        throw HttpError(404, `Card with ID ${id} not found`);
     }
     res.json(updatedCardWorkStatus);
+};
+
+const updateCardOrder = async (req: Request, res: Response) => {
+    const { id } = req.body;
+    const body = req.body;
+
+    const updatedCardOrder = await Card.findByIdAndUpdate(id, body, {
+        new: true,
+    });
+    if (!updatedCardOrder) {
+        throw HttpError(404, `Card with ID ${id} not found`);
+    }
+    res.json(updatedCardOrder);
 };
 
 export default {
@@ -77,4 +88,5 @@ export default {
     deleteCard: ctrlWrapper(deleteCard),
     updateCard: ctrlWrapper(updateCard),
     updateCardWorkStatus: ctrlWrapper(updateCardWorkStatus),
+    updateCardOrder: ctrlWrapper(updateCardOrder),
 };

@@ -6,6 +6,7 @@ interface Card {
     description: string;
     owner: Schema.Types.ObjectId;
     workStatus: string;
+    cardOrder: number;
 }
 
 const cardSchema = new Schema<Card>(
@@ -22,6 +23,10 @@ const cardSchema = new Schema<Card>(
         workStatus: {
             type: String,
             required: [true, 'Set status for card'],
+        },
+        cardOrder: {
+            type: Number,
+            required: [true, 'Set order for card'],
         },
     },
     { versionKey: false, timestamps: true }

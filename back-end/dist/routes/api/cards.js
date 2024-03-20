@@ -11,5 +11,6 @@ cardsRouter.get('/:id', cards_1.default.getCardById);
 cardsRouter.post('/', cards_1.default.addCard);
 cardsRouter.patch('/', cards_1.default.updateCard);
 cardsRouter.patch('/workStatus', cards_1.default.updateCardWorkStatus);
+cardsRouter.patch('/cardOrder', cards_1.default.updateCardOrder);
 cardsRouter.delete('/', cards_1.default.deleteCard);
 exports.default = cardsRouter;

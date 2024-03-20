@@ -11,6 +11,7 @@ import {
   addCardThunk,
   deleteCardThunk,
   updateCardThunk,
+  updateCardWorkStatusThunk,
 } from "../card/operations";
 
 const initialState: BoardsState = {
@@ -23,6 +24,7 @@ const initialState: BoardsState = {
     updatedAt: "",
     cards: [],
   },
+
   isLoading: false,
   error: null,
 };
@@ -115,6 +117,21 @@ const boardsSlice = createSlice({
           state.error = null;
         }
       )
+      .addCase(
+        updateCardWorkStatusThunk.fulfilled,
+        (state, { payload }: PayloadAction<Card>) => {
+          const updatedCardWorkStatusIndex = state.board.cards.findIndex(
+            (card) => card._id === payload._id
+          );
+
+          if (updatedCardWorkStatusIndex !== -1) {
+            state.board.cards[updatedCardWorkStatusIndex] = payload;
+          }
+
+          state.isLoading = false;
+          state.error = null;
+        }
+      )
       .addMatcher(
         isAnyOf(
           getAllBoardsThunk.pending,
@@ -124,7 +141,8 @@ const boardsSlice = createSlice({
           updateBoardThunk.pending,
           addCardThunk.pending,
           deleteCardThunk.pending,
-          updateCardThunk.pending
+          updateCardThunk.pending,
+          updateCardWorkStatusThunk.pending
         ),
         (state) => {
           state.isLoading = true;
@@ -140,7 +158,8 @@ const boardsSlice = createSlice({
           updateBoardThunk.rejected,
           addCardThunk.rejected,
           deleteCardThunk.rejected,
-          updateCardThunk.rejected
+          updateCardThunk.rejected,
+          updateCardWorkStatusThunk.rejected
         ),
         (state, { payload }) => {
           state.isLoading = false;

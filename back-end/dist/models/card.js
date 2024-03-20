@@ -19,6 +19,10 @@ const cardSchema = new mongoose_1.Schema({
         type: String,
         required: [true, 'Set status for card'],
     },
+    cardOrder: {
+        type: Number,
+        required: [true, 'Set order for card'],
+    },
 }, { versionKey: false, timestamps: true });
 cardSchema.post('save', handleMongooseError_1.default);
 const Card = (0, mongoose_1.model)('card', cardSchema);

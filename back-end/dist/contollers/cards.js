@@ -18,7 +18,6 @@ const card_1 = __importDefault(require("../models/card"));
 const getAllCards = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const data = yield card_1.default.find({ owner: id });
-    // if not needed - find({}, '-name -email etc')
     res.json({ data });
 });
 const getCardById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -41,7 +40,6 @@ const deleteCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         throw (0, HttpError_1.default)(404, `Card with ID ${id} not found`);
     }
     res.json(deletedCard);
-    // res.status(204).send();
 });
 const updateCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.body;
@@ -61,9 +59,20 @@ const updateCardWorkStatus = (req, res) => __awaiter(void 0, void 0, void 0, fun
         new: true,
     });
     if (!updatedCardWorkStatus) {
-        throw (0, HttpError_1.default)(404, `Book with ID ${id} not found`);
+        throw (0, HttpError_1.default)(404, `Card with ID ${id} not found`);
     }
     res.json(updatedCardWorkStatus);
+});
+const updateCardOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.body;
+    const body = req.body;
+    const updatedCardOrder = yield card_1.default.findByIdAndUpdate(id, body, {
+        new: true,
+    });
+    if (!updatedCardOrder) {
+        throw (0, HttpError_1.default)(404, `Card with ID ${id} not found`);
+    }
+    res.json(updatedCardOrder);
 });
 exports.default = {
     getAllCards: (0, ctrlWrapper_1.default)(getAllCards),
@@ -72,4 +81,5 @@ exports.default = {
     deleteCard: (0, ctrlWrapper_1.default)(deleteCard),
     updateCard: (0, ctrlWrapper_1.default)(updateCard),
     updateCardWorkStatus: (0, ctrlWrapper_1.default)(updateCardWorkStatus),
+    updateCardOrder: (0, ctrlWrapper_1.default)(updateCardOrder),
 };

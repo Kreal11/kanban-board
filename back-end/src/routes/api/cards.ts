@@ -11,6 +11,7 @@ cardsRouter.post('/', cardsController.addCard);
 
 cardsRouter.patch('/', cardsController.updateCard);
 cardsRouter.patch('/workStatus', cardsController.updateCardWorkStatus);
+cardsRouter.patch('/cardOrder', cardsController.updateCardOrder);
 
 cardsRouter.delete('/', cardsController.deleteCard);
 
