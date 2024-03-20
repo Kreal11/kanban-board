@@ -10,6 +10,6 @@ cardsRouter.get('/', cards_1.default.getAllCards);
 cardsRouter.get('/:id', cards_1.default.getCardById);
 cardsRouter.post('/', cards_1.default.addCard);
 cardsRouter.patch('/', cards_1.default.updateCard);
-cardsRouter.patch('/', cards_1.default.updateCardWorkStatus);
+cardsRouter.patch('/workStatus', cards_1.default.updateCardWorkStatus);
 cardsRouter.delete('/', cards_1.default.deleteCard);
 exports.default = cardsRouter;

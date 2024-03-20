@@ -17,3 +17,7 @@ export interface updateCardBody {
   description: string;
   id: string;
 }
+export interface updateCardWorkStatusBody {
+  id: string;
+  workStatus: string;
+}
