@@ -80,7 +80,7 @@ const Board = () => {
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
-    console.log(destination?.index);
+
     if (
       !destination ||
       (destination.droppableId === source.droppableId &&
@@ -161,51 +161,67 @@ const Board = () => {
     }
 
     if (source.droppableId === destination.droppableId) {
-      setTimeout(async () => {
-        await dispatch(
-          updateCardOrderThunk({
-            id: draggableId,
-            cardOrder: destination.index,
-          })
-        )
-          .unwrap()
-          .then(() => {
-            toast.success("Card order was changed successfully!");
-          })
-          .catch(() => {
-            toast.warning("Oops, something went wrong! Try again, please!");
-          });
-      }, 0);
+      const updatedList =
+        destination.droppableId === "toDo"
+          ? [...toDo]
+          : destination.droppableId === "inProgress"
+          ? [...inProgress]
+          : [...done];
+
+      const movedCard = updatedList.find((card) => card._id === draggableId);
+
+      if (movedCard) {
+        const movedCardOrder = movedCard.cardOrder;
+
+        const updatedCards = updatedList.map((card) => {
+          const updatedCard = { ...card };
+          if (card.cardOrder === movedCardOrder) {
+            updatedCard.cardOrder = destination.index;
+          } else if (
+            destination.index > movedCardOrder &&
+            card.cardOrder <= destination.index &&
+            card.cardOrder > movedCardOrder
+          ) {
+            updatedCard.cardOrder--;
+          } else if (
+            destination.index < movedCardOrder &&
+            card.cardOrder >= destination.index &&
+            card.cardOrder < movedCardOrder
+          ) {
+            updatedCard.cardOrder++;
+          }
+          return updatedCard;
+        });
+
+        if (destination.droppableId === "toDo") {
+          const sortedToDo = updatedCards.sort(
+            (a, b) => a.cardOrder - b.cardOrder
+          );
+          setToDo(sortedToDo);
+        } else if (destination.droppableId === "inProgress") {
+          const sortedInProgress = updatedCards.sort(
+            (a, b) => a.cardOrder - b.cardOrder
+          );
+          setInProgress(sortedInProgress);
+        } else {
+          const sortedDone = updatedCards.sort(
+            (a, b) => a.cardOrder - b.cardOrder
+          );
+          setDone(sortedDone);
+        }
+
+        Promise.all(
+          updatedCards.map((card) =>
+            dispatch(
+              updateCardOrderThunk({
+                id: card._id,
+                cardOrder: card.cardOrder,
+              })
+            )
+          )
+        );
+      }
     }
-
-    // Найдем список, из которого была перемещена карточка
-    // const startList = cards.filter(
-    //   (card) => card.workStatus === source.droppableId
-    // );
-
-    // Найдем список, в который была перемещена карточка
-    // const endList = cards.filter(
-    //   (card) => card.workStatus === destination.droppableId
-    // );
-
-    // Создадим копию массива карточек из начального списка
-    // const newStartList = [...startList];
-
-    // Удалим перемещаемую карточку из начального списка
-    // const [movedCard] = newStartList.splice(source.index, 1);
-    // const newMovedCard = { ...movedCard };
-
-    // Обновим индекс перемещенной карточки в соответствии с новым списком
-    // newMovedCard.index = destination.index;
-
-    // Добавим перемещенную карточку в конечный список
-    // endList.splice(destination.index, 0, newMovedCard);
-
-    // Обновим состояние вашего приложения, например, отправим запрос на сервер для сохранения изменений
-    // dispatch(updateCardPositionThunk(movedCard, endList._id));
-
-    // Обновим состояние вашего приложения
-    // setCards(...);
   };
 
   return (
