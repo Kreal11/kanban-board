@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { getCardByIdThunk } from "./operations";
 import { CardState } from "./types";
 
@@ -21,62 +21,21 @@ const cardsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getCardByIdThunk.fulfilled, (state, { payload }) => {
-      state.card = payload;
+    builder
+      .addCase(getCardByIdThunk.fulfilled, (state, { payload }) => {
+        state.card = payload;
 
-      state.isLoading = false;
-      state.error = null;
-    });
-    //   .addCase(
-    //     addBoardThunk.fulfilled,
-    //     (state, { payload }: PayloadAction<Board>) => {
-    //       state.boards = [...state.boards, payload];
-
-    //       state.isLoading = false;
-    //       state.error = null;
-    //     }
-    //   )
-    //   .addCase(
-    //     updateBoardThunk.fulfilled,
-    //     (state, { payload }: PayloadAction<Board>) => {
-    //       const updatedBoardIndex = state.boards.findIndex(
-    //         (board) => board._id === payload._id
-    //       );
-
-    //       if (updatedBoardIndex !== -1) {
-    //         state.boards[updatedBoardIndex] = payload;
-    //       }
-
-    //       state.isLoading = false;
-    //       state.error = null;
-    //     }
-    //   )
-    //   .addMatcher(
-    //     isAnyOf(
-    //       getAllBoardsThunk.pending,
-    //       getBoardByIdThunk.pending,
-    //       addBoardThunk.pending,
-    //       deleteBoardThunk.pending,
-    //       updateBoardThunk.pending
-    //     ),
-    //     (state) => {
-    //       state.isLoading = true;
-    //       state.error = null;
-    //     }
-    //   )
-    //   .addMatcher(
-    //     isAnyOf(
-    //       getAllBoardsThunk.rejected,
-    //       getBoardByIdThunk.rejected,
-    //       addBoardThunk.rejected,
-    //       deleteBoardThunk.rejected,
-    //       updateBoardThunk.rejected
-    //     ),
-    //     (state, { payload }) => {
-    //       state.isLoading = false;
-    //       state.error = typeof payload === "string" ? payload : null;
-    //     }
-    //   );
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addMatcher(isAnyOf(getCardByIdThunk.pending), (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addMatcher(isAnyOf(getCardByIdThunk.rejected), (state, { payload }) => {
+        state.isLoading = false;
+        state.error = typeof payload === "string" ? payload : null;
+      });
   },
 });
 

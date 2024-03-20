@@ -121,7 +121,10 @@ const boardsSlice = createSlice({
           getBoardByIdThunk.pending,
           addBoardThunk.pending,
           deleteBoardThunk.pending,
-          updateBoardThunk.pending
+          updateBoardThunk.pending,
+          addCardThunk.pending,
+          deleteCardThunk.pending,
+          updateCardThunk.pending
         ),
         (state) => {
           state.isLoading = true;
@@ -134,7 +137,10 @@ const boardsSlice = createSlice({
           getBoardByIdThunk.rejected,
           addBoardThunk.rejected,
           deleteBoardThunk.rejected,
-          updateBoardThunk.rejected
+          updateBoardThunk.rejected,
+          addCardThunk.rejected,
+          deleteCardThunk.rejected,
+          updateCardThunk.rejected
         ),
         (state, { payload }) => {
           state.isLoading = false;
