@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { kanbanApi } from "../instance";
-import { addCardBody, updateCardBody } from "./types";
+import { addCardBody, updateCardBody, updateCardWorkStatusBody } from "./types";
 
 export const getCardByIdThunk = createAsyncThunk(
   "getCardById",
@@ -57,6 +57,22 @@ export const deleteCardThunk = createAsyncThunk(
 export const updateCardThunk = createAsyncThunk(
   "updateCard",
   async (body: updateCardBody, thunkApi) => {
+    try {
+      const { data } = await kanbanApi.patch("cards", body);
+
+      return data;
+    } catch (error) {
+      if (error instanceof Error && typeof error.message === "string") {
+        return thunkApi.rejectWithValue(error.message);
+      }
+      return thunkApi.rejectWithValue(`An unknown error occurred: ${error}`);
+    }
+  }
+);
+
+export const updateCardWorkStatusThunk = createAsyncThunk(
+  "updateCardWorkStatus",
+  async (body: updateCardWorkStatusBody, thunkApi) => {
     try {
       const { data } = await kanbanApi.patch("cards", body);
 

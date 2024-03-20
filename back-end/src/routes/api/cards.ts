@@ -10,7 +10,7 @@ cardsRouter.get('/:id', cardsController.getCardById);
 cardsRouter.post('/', cardsController.addCard);
 
 cardsRouter.patch('/', cardsController.updateCard);
-cardsRouter.patch('/', cardsController.updateCardWorkStatus);
+cardsRouter.patch('/workStatus', cardsController.updateCardWorkStatus);
 
 cardsRouter.delete('/', cardsController.deleteCard);
 
