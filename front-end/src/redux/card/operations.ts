@@ -74,7 +74,7 @@ export const updateCardWorkStatusThunk = createAsyncThunk(
   "updateCardWorkStatus",
   async (body: updateCardWorkStatusBody, thunkApi) => {
     try {
-      const { data } = await kanbanApi.patch("cards", body);
+      const { data } = await kanbanApi.patch("cards/workStatus", body);
 
       return data;
     } catch (error) {
