@@ -22,7 +22,10 @@ import Modal from "../../components/modal/Modal";
 import AddCardForm from "../../components/addCardForm/AddCardForm";
 import { useModal } from "../../hooks/useModal";
 import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
-import { updateCardWorkStatusThunk } from "../../redux/card/operations";
+import {
+  updateCardOrderThunk,
+  updateCardWorkStatusThunk,
+} from "../../redux/card/operations";
 import { Card } from "../../redux/board/types";
 
 const Board = () => {
@@ -34,6 +37,7 @@ const Board = () => {
 
   const { cards } = useSelector(selectGetBoardById);
   const isLoading = useSelector(selectIsLoading);
+  console.log(cards);
 
   const [toDo, setToDo] = useState<Card[]>([]);
   const [inProgress, setInProgress] = useState<Card[]>([]);
@@ -47,9 +51,15 @@ const Board = () => {
       );
       const doneCards = cards.filter((card) => card.workStatus === "done");
 
-      setToDo(toDoCards);
-      setInProgress(inProgressCards);
-      setDone(doneCards);
+      const sortedToDo = toDoCards.sort((a, b) => a.cardOrder - b.cardOrder);
+      const sortedInProgress = inProgressCards.sort(
+        (a, b) => a.cardOrder - b.cardOrder
+      );
+      const sortedDone = doneCards.sort((a, b) => a.cardOrder - b.cardOrder);
+
+      setToDo(sortedToDo);
+      setInProgress(sortedInProgress);
+      setDone(sortedDone);
     }
   }, [cards, isLoading]);
 
@@ -68,9 +78,9 @@ const Board = () => {
     navigate("/");
   };
 
-  const onDragEnd = async (result: DropResult) => {
+  const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
-
+    console.log(destination?.index);
     if (
       !destination ||
       (destination.droppableId === source.droppableId &&
@@ -143,6 +153,24 @@ const Board = () => {
           .unwrap()
           .then(() => {
             toast.success("Card status was changed successfully!");
+          })
+          .catch(() => {
+            toast.warning("Oops, something went wrong! Try again, please!");
+          });
+      }, 0);
+    }
+
+    if (source.droppableId === destination.droppableId) {
+      setTimeout(async () => {
+        await dispatch(
+          updateCardOrderThunk({
+            id: draggableId,
+            cardOrder: destination.index,
+          })
+        )
+          .unwrap()
+          .then(() => {
+            toast.success("Card order was changed successfully!");
           })
           .catch(() => {
             toast.warning("Oops, something went wrong! Try again, please!");

@@ -4,6 +4,7 @@ export interface Card {
   description: string;
   owner: string;
   workStatus: string;
+  cardOrder: number;
   createdAt?: string;
   updatedAt?: string;
 }

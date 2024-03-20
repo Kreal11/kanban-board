@@ -21,3 +21,7 @@ export interface updateCardWorkStatusBody {
   id: string;
   workStatus: string;
 }
+export interface updateCardOrderBody {
+  id: string;
+  cardOrder: number;
+}

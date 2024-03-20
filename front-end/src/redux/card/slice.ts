@@ -11,6 +11,7 @@ const initialState: CardState = {
     createdAt: "",
     updatedAt: "",
     workStatus: "",
+    cardOrder: 1,
   },
   isLoading: false,
   error: null,
