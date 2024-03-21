@@ -55,3 +55,9 @@ export const Row = styled.div`
   align-items: flex-start; /* Вирівнюємо дошки вгору */
   gap: 10px; /* Проміжок між дошками */
 `;
+
+export const NoBoardsPlugWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

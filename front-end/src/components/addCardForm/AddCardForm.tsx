@@ -13,16 +13,25 @@ interface Inputs {
 
 interface AddCardFormProps {
   closeModal: () => void;
+  newCardOrder: number;
 }
 
-const AddCardForm: FC<AddCardFormProps> = ({ closeModal }) => {
+const AddCardForm: FC<AddCardFormProps> = ({ closeModal, newCardOrder }) => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const { register, handleSubmit, reset } = useForm<Inputs>();
   const workStatus = "toDo";
 
   const submit: SubmitHandler<Inputs> = ({ title, description }) => {
-    dispatch(addCardThunk({ title, description, owner: id, workStatus }))
+    dispatch(
+      addCardThunk({
+        title,
+        description,
+        owner: id,
+        workStatus,
+        cardOrder: newCardOrder,
+      })
+    )
       .unwrap()
       .then(() => {
         toast.success("New board was added successfully!");

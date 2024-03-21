@@ -11,6 +11,7 @@ export interface addCardBody {
   description: string;
   owner: string | undefined;
   workStatus: string;
+  cardOrder: number;
 }
 export interface updateCardBody {
   title: string;
