@@ -29,19 +29,22 @@ export const AddBoardWrapper = styled.div`
   height: 250px;
   cursor: pointer;
   border-radius: 8px;
-  transition: background-color 0.4s ease-in-out, fill 0.4s ease-in-out;
+  transition: background-color 0.4s ease-in-out;
 
   &:hover {
     background-color: darkslategrey;
-    fill: white;
+    img {
+      filter: brightness(0) invert(1);
+    }
   }
 
-  svg {
+  img {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 60px;
     height: 60px;
+    transition: filter 0.4s ease-in-out;
   }
 
   p {
