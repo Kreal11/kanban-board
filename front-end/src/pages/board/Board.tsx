@@ -281,14 +281,14 @@ const Board = () => {
               {(provided) => (
                 <CardListWrapper>
                   <h2>To Do</h2>
+                  <CardPlusImgWrapper onClick={openModal}>
+                    <img src={plusImg} alt="Plus" />
+                  </CardPlusImgWrapper>
                   <CardList
+                    $toDo="toDo"
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                   >
-                    <CardPlusImgWrapper onClick={openModal}>
-                      <img src={plusImg} alt="Plus" />
-                    </CardPlusImgWrapper>
-
                     {toDo?.map((card, index) => (
                       <CardItem key={card._id} {...card} index={index} />
                     ))}

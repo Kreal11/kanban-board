@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+type ToDo = {
+  $toDo?: string;
+};
+
 export const HomeButton = styled.button`
   display: flex;
   justify-content: center;
@@ -36,13 +40,14 @@ export const CardListWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 250px;
+  position: relative;
 
   h2 {
     margin-bottom: 30px;
   }
 `;
 
-export const CardList = styled.ul`
+export const CardList = styled.ul<ToDo>`
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -51,6 +56,8 @@ export const CardList = styled.ul`
   width: 210px;
   border-radius: 8px;
   min-height: 700px;
+
+  ${({ $toDo }) => $toDo === "toDo" && `padding-top: 202px;`}
 `;
 
 export const CardPlusImgWrapper = styled.div`
@@ -61,6 +68,9 @@ export const CardPlusImgWrapper = styled.div`
   width: 50px;
   height: 50px;
   transition: background-color 0.4s ease-in-out, filter 0.4s ease-in-out;
+  position: absolute;
+  top: 76px;
+  left: 11.5px;
 
   img {
     width: 50px;
