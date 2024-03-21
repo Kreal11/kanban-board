@@ -18,7 +18,7 @@ interface CardItemProps {
   index: number;
 }
 
-const CardItem = ({ title, description, _id, index}: CardItemProps) => {
+const CardItem = ({ title, description, _id, index }: CardItemProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isOpen, openModal, closeModal } = useModal();
@@ -33,8 +33,8 @@ const CardItem = ({ title, description, _id, index}: CardItemProps) => {
       .then(() => {
         toast.success("Card was deleted successfully!");
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        toast.error("Oops, something went wrong. Try again, please!");
       });
   };
 

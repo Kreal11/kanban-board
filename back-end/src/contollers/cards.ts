@@ -7,6 +7,9 @@ const getAllCards = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     const data = await Card.find({ owner: id });
+    if (!data) {
+        throw HttpError(404, `Something went wrong`);
+    }
 
     res.json({ data });
 };
@@ -27,6 +30,10 @@ const addCard = async (req: Request, res: Response) => {
     const body = req.body;
 
     const createdCard = await Card.create({ ...body });
+
+    if (!createdCard) {
+        throw HttpError(404, `Card was not created`);
+    }
 
     res.status(201).json(createdCard);
 };

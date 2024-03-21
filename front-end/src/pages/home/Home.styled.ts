@@ -56,8 +56,8 @@ export const AddBoardWrapper = styled.div`
 export const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start; /* Вирівнюємо дошки вгору */
-  gap: 10px; /* Проміжок між дошками */
+  align-items: flex-start;
+  gap: 10px;
 `;
 
 export const NoBoardsPlugWrapper = styled.div`

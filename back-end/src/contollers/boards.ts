@@ -7,13 +7,15 @@ import mongoose from 'mongoose';
 const getAllBoards = async (req: Request, res: Response) => {
     const data = await Board.find();
 
-    // if not needed - find({}, '-name -email etc')
+    if (!data) {
+        throw HttpError(404, `Something went wrong`);
+    }
+
     res.json({ data });
 };
 
 const getBoardById = async (req: Request, res: Response) => {
     const { id } = req.params;
-    // if search by title - await Contact.findOne({title: title})
 
     const pipeline = [
         {
@@ -21,11 +23,6 @@ const getBoardById = async (req: Request, res: Response) => {
                 _id: new mongoose.Types.ObjectId(id),
             },
         },
-        // {
-        //     $addFields: {
-        //         boardStringId: { $toString: '$_id' },
-        //     },
-        // },
         {
             $lookup: {
                 from: 'cards',
@@ -49,6 +46,9 @@ const addBoard = async (req: Request, res: Response) => {
 
     const createdBoard = await Board.create({ ...body });
 
+    if (!createdBoard) {
+        throw HttpError(404, `Board was not created`);
+    }
     res.status(201).json(createdBoard);
 };
 
@@ -60,7 +60,6 @@ const deleteBoard = async (req: Request, res: Response) => {
         throw HttpError(404, `Board with ID ${id} not found`);
     }
     res.json(deletedBoard);
-    // res.status(204).send();
 };
 
 const updateBoard = async (req: Request, res: Response) => {

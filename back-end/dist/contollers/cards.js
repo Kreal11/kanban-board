@@ -18,6 +18,9 @@ const card_1 = __importDefault(require("../models/card"));
 const getAllCards = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const data = yield card_1.default.find({ owner: id });
+    if (!data) {
+        throw (0, HttpError_1.default)(404, `Something went wrong`);
+    }
     res.json({ data });
 });
 const getCardById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -31,6 +34,9 @@ const getCardById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 const addCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     const createdCard = yield card_1.default.create(Object.assign({}, body));
+    if (!createdCard) {
+        throw (0, HttpError_1.default)(404, `Card was not created`);
+    }
     res.status(201).json(createdCard);
 });
 const deleteCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
