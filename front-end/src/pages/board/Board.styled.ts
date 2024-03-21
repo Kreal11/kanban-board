@@ -53,17 +53,24 @@ export const CardList = styled.ul`
   min-height: 700px;
 `;
 
-export const CardPlusSvg = styled.svg`
+export const CardPlusImgWrapper = styled.div`
   cursor: pointer;
   background-color: white;
   border-radius: 8px;
   padding: 61px 80px;
   width: 50px;
   height: 50px;
-  transition: background-color 0.4s ease-in-out, fill 0.4s ease-in-out;
+  transition: background-color 0.4s ease-in-out, filter 0.4s ease-in-out;
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
 
   &:hover {
     background-color: darkslategrey;
-    fill: white;
+    img {
+      filter: brightness(0) invert(1);
+    }
   }
 `;

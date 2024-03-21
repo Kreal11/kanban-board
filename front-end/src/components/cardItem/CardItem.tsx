@@ -1,6 +1,5 @@
 import { ButtonsWrapper } from "../boardItem/BoardItem.styled";
 import { CardInfoWrapper, CardLi } from "./CardItem.styled";
-import sprite from "../../assets/icons/plus.svg";
 import { useAppDispatch } from "../../redux/hooks";
 import { deleteCardThunk } from "../../redux/card/operations";
 import { toast } from "react-toastify";
@@ -9,6 +8,8 @@ import { useModal } from "../../hooks/useModal";
 import Modal from "../modal/Modal";
 import UpdateCardForm from "../updateCardForm/UpdateCardForm";
 import { Draggable } from "react-beautiful-dnd";
+import editImg from "../../assets/images/edit.png";
+import deleteImg from "../../assets/images/delete.png";
 
 interface CardItemProps {
   _id: string;
@@ -52,14 +53,10 @@ const CardItem = ({ title, description, _id, index }: CardItemProps) => {
             </CardInfoWrapper>
             <ButtonsWrapper>
               <button onClick={openModal}>
-                <svg>
-                  <use xlinkHref={`${sprite}#icon-edit`} />
-                </svg>
+                <img src={editImg} alt="Edit mark" />
               </button>
               <button onClick={() => handleDeleteCard(_id)}>
-                <svg>
-                  <use xlinkHref={`${sprite}#icon-delete`} />
-                </svg>
+                <img src={deleteImg} alt="Delete bin" />
               </button>
             </ButtonsWrapper>
           </CardLi>

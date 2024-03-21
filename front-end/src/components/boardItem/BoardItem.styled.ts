@@ -18,14 +18,16 @@ export const ButtonsWrapper = styled.div`
 
     &:hover {
       background-color: darkslategray;
-      fill: white;
+      img {
+        filter: brightness(0) invert(1);
+      }
     }
   }
 
-  svg {
+  img {
     width: 20px;
     height: 20px;
-    transition: fill 0.4s ease-in-out;
+    transition: filter 0.4s ease-in-out;
   }
 `;
 
