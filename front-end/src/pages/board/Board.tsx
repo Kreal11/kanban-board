@@ -292,6 +292,12 @@ const Board = () => {
                     {toDo?.map((card, index) => (
                       <CardItem key={card._id} {...card} index={index} />
                     ))}
+                    {!cards.length && (
+                      <p>
+                        There are no cards yet. Add new card to see it in the
+                        list
+                      </p>
+                    )}
                     {provided.placeholder}
                   </CardList>
                 </CardListWrapper>
@@ -309,6 +315,9 @@ const Board = () => {
                     {inProgress?.map((card, index) => (
                       <CardItem key={card._id} {...card} index={index} />
                     ))}
+                    {!inProgress.length && (
+                      <p>Move the card in this column to see it there</p>
+                    )}
                     {provided.placeholder}
                   </CardList>
                 </CardListWrapper>
@@ -326,6 +335,9 @@ const Board = () => {
                     {done?.map((card, index) => (
                       <CardItem key={card._id} {...card} index={index} />
                     ))}
+                    {!done.length && (
+                      <p>Move the card in this column to see it there</p>
+                    )}
                     {provided.placeholder}
                   </CardList>
                 </CardListWrapper>
@@ -336,7 +348,7 @@ const Board = () => {
       </BoardWrapper>
       {isOpen && (
         <Modal closeModal={closeModal}>
-          <AddCardForm closeModal={closeModal} />
+          <AddCardForm closeModal={closeModal} newCardOrder={toDo.length} />
         </Modal>
       )}
     </>

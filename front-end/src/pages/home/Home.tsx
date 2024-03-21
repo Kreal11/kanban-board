@@ -4,7 +4,12 @@ import React, { useEffect } from "react";
 import { useAppDispatch } from "../../redux/hooks";
 import { getAllBoardsThunk } from "../../redux/board/operations";
 import BoardItem from "../../components/boardItem/BoardItem";
-import { AddBoardWrapper, BoardsList, BoardsWrapper } from "./Home.styled";
+import {
+  AddBoardWrapper,
+  BoardsList,
+  BoardsWrapper,
+  NoBoardsPlugWrapper,
+} from "./Home.styled";
 import sprite from "../../assets/icons/plus.svg";
 import { useModal } from "../../hooks/useModal";
 import Modal from "../../components/modal/Modal";
@@ -31,29 +36,34 @@ const Home = () => {
   return (
     <BoardsWrapper>
       {isLoading && <p>Loading...</p>}
-      <BoardsList>
-        {(!boards || !boards.length) && (
-          <AddBoardWrapper onClick={openModal}>
-            <svg>
-              <use xlinkHref={`${sprite}#icon-plus`} />
-            </svg>
-            <p>Add board</p>
-          </AddBoardWrapper>
-        )}
-        {boards.map((board, index) => (
-          <React.Fragment key={board._id}>
-            {index === 0 && (
+      {!isLoading && (
+        <BoardsList>
+          {(!boards || !boards.length) && (
+            <NoBoardsPlugWrapper>
+              <p>There are no boards yet. Add new board to see it there</p>
               <AddBoardWrapper onClick={openModal}>
                 <svg>
                   <use xlinkHref={`${sprite}#icon-plus`} />
                 </svg>
                 <p>Add board</p>
               </AddBoardWrapper>
-            )}
-            <BoardItem {...board} />
-          </React.Fragment>
-        ))}
-      </BoardsList>
+            </NoBoardsPlugWrapper>
+          )}
+          {boards.map((board, index) => (
+            <React.Fragment key={board._id}>
+              {index === 0 && (
+                <AddBoardWrapper onClick={openModal}>
+                  <svg>
+                    <use xlinkHref={`${sprite}#icon-plus`} />
+                  </svg>
+                  <p>Add board</p>
+                </AddBoardWrapper>
+              )}
+              <BoardItem {...board} />
+            </React.Fragment>
+          ))}
+        </BoardsList>
+      )}
       {isOpen && (
         <Modal closeModal={closeModal}>
           <AddBoardForm closeModal={closeModal} />
