@@ -29,10 +29,11 @@ export const AddBoardWrapper = styled.div`
   height: 250px;
   cursor: pointer;
   border-radius: 8px;
-  transition: background-color 0.4s ease-in-out;
+  transition: background-color 0.4s ease-in-out, fill 0.4s ease-in-out;
 
   &:hover {
     background-color: darkslategrey;
+    fill: white;
   }
 
   svg {
