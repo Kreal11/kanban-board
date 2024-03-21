@@ -18,23 +18,19 @@ const HttpError_1 = __importDefault(require("../helpers/HttpError"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const getAllBoards = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield board_1.default.find();
-    // if not needed - find({}, '-name -email etc')
+    if (!data) {
+        throw (0, HttpError_1.default)(404, `Something went wrong`);
+    }
     res.json({ data });
 });
 const getBoardById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    // if search by title - await Contact.findOne({title: title})
     const pipeline = [
         {
             $match: {
                 _id: new mongoose_1.default.Types.ObjectId(id),
             },
         },
-        // {
-        //     $addFields: {
-        //         boardStringId: { $toString: '$_id' },
-        //     },
-        // },
         {
             $lookup: {
                 from: 'cards',
@@ -53,6 +49,9 @@ const getBoardById = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 const addBoard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     const createdBoard = yield board_1.default.create(Object.assign({}, body));
+    if (!createdBoard) {
+        throw (0, HttpError_1.default)(404, `Board was not created`);
+    }
     res.status(201).json(createdBoard);
 });
 const deleteBoard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -62,7 +61,6 @@ const deleteBoard = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         throw (0, HttpError_1.default)(404, `Board with ID ${id} not found`);
     }
     res.json(deletedBoard);
-    // res.status(204).send();
 });
 const updateBoard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.body;

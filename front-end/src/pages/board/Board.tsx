@@ -37,7 +37,6 @@ const Board = () => {
 
   const { cards } = useSelector(selectGetBoardById);
   const isLoading = useSelector(selectIsLoading);
-  console.log(cards);
 
   const [toDo, setToDo] = useState<Card[]>([]);
   const [inProgress, setInProgress] = useState<Card[]>([]);
@@ -251,7 +250,7 @@ const Board = () => {
           }
         }
       }
-      setTimeout(async () => {
+      setTimeout(() => {
         Promise.all([
           dispatch(
             updateCardWorkStatusThunk({

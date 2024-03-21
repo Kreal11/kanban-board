@@ -40,18 +40,9 @@ export const StyledCloseButton = styled.button`
     transform: scale(1.2);
   }
 
-  svg {
-    width: 18px;
-    height: 18px;
-  }
-
   @media screen and (min-width: ${tablet}) {
     right: 28px;
     width: 24px;
     height: 24px;
-    svg {
-      width: 28px;
-      height: 28px;
-    }
   }
 `;
