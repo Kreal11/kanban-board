@@ -23,6 +23,11 @@ const AddCardForm: FC<AddCardFormProps> = ({ closeModal, newCardOrder }) => {
   const workStatus = "toDo";
 
   const submit: SubmitHandler<Inputs> = ({ title, description }) => {
+    if (title.trim() === "" || description.trim() === "") {
+      toast.warning("Please fill out all fields");
+      return;
+    }
+
     dispatch(
       addCardThunk({
         title,
