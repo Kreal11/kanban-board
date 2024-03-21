@@ -56,6 +56,8 @@ export const CardList = styled.ul<ToDo>`
   width: 210px;
   border-radius: 8px;
   min-height: 700px;
+  min-width: 230px;
+  box-sizing: border-box;
 
   ${({ $toDo }) => $toDo === "toDo" && `padding-top: 202px;`}
 `;

@@ -36,6 +36,11 @@ const UpdateBoardForm: FC<UpdateBoardFormProps> = ({
       return toast.warning("Fields are required! Fill out it, please");
     }
 
+    if (title.trim() === "" || theme.trim() === "") {
+      toast.warning("Please fill out all fields");
+      return;
+    }
+
     dispatch(updateBoardThunk({ title, theme, id }))
       .unwrap()
       .then(() => {

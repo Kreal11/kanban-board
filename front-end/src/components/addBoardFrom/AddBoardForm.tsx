@@ -19,6 +19,11 @@ const AddBoardForm: FC<AddBoardFormProps> = ({ closeModal }) => {
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
   const submit: SubmitHandler<Inputs> = ({ title, theme }) => {
+    if (title.trim() === "" || theme.trim() === "") {
+      toast.warning("Please fill out all fields");
+      return;
+    }
+
     dispatch(addBoardThunk({ title, theme }))
       .unwrap()
       .then(() => {
