@@ -80,7 +80,7 @@ const Board = () => {
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
-    console.log(destination?.index);
+
     if (
       !destination ||
       (destination.droppableId === source.droppableId &&
@@ -89,123 +89,185 @@ const Board = () => {
       return;
     }
 
-    if (source.droppableId !== destination.droppableId) {
-      const updatedToDo = [...toDo];
-      const updatedInProgress = [...inProgress];
-      const updatedDone = [...done];
+    const updatedToDo = [...toDo];
+    const updatedInProgress = [...inProgress];
+    const updatedDone = [...done];
 
-      const movedCard =
-        updatedToDo.find((card) => card._id === draggableId) ||
-        updatedInProgress.find((card) => card._id === draggableId) ||
-        updatedDone.find((card) => card._id === draggableId);
+    const movedCard =
+      updatedToDo.find((card) => card._id === draggableId) ||
+      updatedInProgress.find((card) => card._id === draggableId) ||
+      updatedDone.find((card) => card._id === draggableId);
 
-      // Удаляем карточку из исходного списка
-      let sourceList;
+    let sourceList;
+    switch (source.droppableId) {
+      case "toDo":
+        sourceList = updatedToDo;
+        break;
+      case "inProgress":
+        sourceList = updatedInProgress;
+        break;
+      case "done":
+        sourceList = updatedDone;
+        break;
+      default:
+        sourceList = null;
+    }
+
+    if (sourceList) {
+      sourceList.splice(source.index, 1);
+
+      const updatedSourceList = sourceList.map((card, index) => ({
+        ...card,
+        cardOrder: index,
+      }));
+
+      Promise.all(
+        updatedSourceList.map((card) =>
+          dispatch(
+            updateCardOrderThunk({
+              id: card._id,
+              cardOrder: card.cardOrder,
+            })
+          )
+        )
+      );
+
       switch (source.droppableId) {
         case "toDo":
-          sourceList = updatedToDo;
+          setToDo(updatedSourceList);
           break;
         case "inProgress":
-          sourceList = updatedInProgress;
+          setInProgress(updatedSourceList);
           break;
         case "done":
-          sourceList = updatedDone;
+          setDone(updatedSourceList);
           break;
         default:
-          sourceList = null;
+          break;
       }
+    }
 
-      if (sourceList) {
-        sourceList.splice(source.index, 1);
+    let destinationList;
+    switch (destination.droppableId) {
+      case "toDo":
+        destinationList = updatedToDo;
+        break;
+      case "inProgress":
+        destinationList = updatedInProgress;
+        break;
+      case "done":
+        destinationList = updatedDone;
+        break;
+      default:
+        destinationList = null;
+    }
+
+    if (destinationList && movedCard) {
+      destinationList.splice(destination.index, 0, movedCard);
+
+      const updatedDestinationList = destinationList.map((card, index) => ({
+        ...card,
+        cardOrder: index,
+      }));
+
+      Promise.all(
+        updatedDestinationList.map((card) =>
+          dispatch(
+            updateCardOrderThunk({
+              id: card._id,
+              cardOrder: card.cardOrder,
+            })
+          )
+        )
+      );
+
+      switch (source.droppableId) {
+        case "toDo":
+          setToDo(updatedDestinationList);
+          break;
+        case "inProgress":
+          setInProgress(updatedDestinationList);
+          break;
+        case "done":
+          setDone(updatedDestinationList);
+          break;
+        default:
+          break;
       }
+    }
 
-      // Добавляем карточку в конечный список
-      let destinationList;
+    setToDo(updatedToDo);
+    setInProgress(updatedInProgress);
+    setDone(updatedDone);
+
+    if (source.droppableId !== destination.droppableId) {
+      let updatedList;
       switch (destination.droppableId) {
         case "toDo":
-          destinationList = updatedToDo;
+          updatedList = [...toDo];
           break;
         case "inProgress":
-          destinationList = updatedInProgress;
+          updatedList = [...inProgress];
           break;
         case "done":
-          destinationList = updatedDone;
+          updatedList = [...done];
           break;
         default:
-          destinationList = null;
+          updatedList = null;
       }
 
-      if (destinationList && movedCard) {
-        destinationList.splice(destination.index, 0, movedCard);
+      if (updatedList) {
+        const movedCard = updatedList.find((card) => card._id === draggableId);
+        if (movedCard) {
+          updatedList.splice(destination.index, 0, movedCard);
+          updatedList = updatedList.map((card, index) => ({
+            ...card,
+            cardOrder: index,
+          }));
+
+          Promise.all(
+            updatedList.map((card) =>
+              dispatch(
+                updateCardOrderThunk({
+                  id: card._id,
+                  cardOrder: card.cardOrder,
+                })
+              )
+            )
+          );
+
+          switch (destination.droppableId) {
+            case "toDo":
+              setToDo(updatedList);
+              break;
+            case "inProgress":
+              setInProgress(updatedList);
+              break;
+            case "done":
+              setDone(updatedList);
+              break;
+            default:
+              break;
+          }
+        }
       }
-
-      setToDo(updatedToDo);
-      setInProgress(updatedInProgress);
-      setDone(updatedDone);
-
       setTimeout(async () => {
-        await dispatch(
-          updateCardWorkStatusThunk({
-            id: draggableId,
-            workStatus: destination.droppableId,
-          })
-        )
-          .unwrap()
-          .then(() => {
-            toast.success("Card status was changed successfully!");
-          })
-          .catch(() => {
-            toast.warning("Oops, something went wrong! Try again, please!");
-          });
+        Promise.all([
+          dispatch(
+            updateCardWorkStatusThunk({
+              id: draggableId,
+              workStatus: destination.droppableId,
+            })
+          ),
+          dispatch(
+            updateCardOrderThunk({
+              id: draggableId,
+              cardOrder: destination.index,
+            })
+          ),
+        ]);
       }, 0);
     }
-
-    if (source.droppableId === destination.droppableId) {
-      setTimeout(async () => {
-        await dispatch(
-          updateCardOrderThunk({
-            id: draggableId,
-            cardOrder: destination.index,
-          })
-        )
-          .unwrap()
-          .then(() => {
-            toast.success("Card order was changed successfully!");
-          })
-          .catch(() => {
-            toast.warning("Oops, something went wrong! Try again, please!");
-          });
-      }, 0);
-    }
-
-    // Найдем список, из которого была перемещена карточка
-    // const startList = cards.filter(
-    //   (card) => card.workStatus === source.droppableId
-    // );
-
-    // Найдем список, в который была перемещена карточка
-    // const endList = cards.filter(
-    //   (card) => card.workStatus === destination.droppableId
-    // );
-
-    // Создадим копию массива карточек из начального списка
-    // const newStartList = [...startList];
-
-    // Удалим перемещаемую карточку из начального списка
-    // const [movedCard] = newStartList.splice(source.index, 1);
-    // const newMovedCard = { ...movedCard };
-
-    // Обновим индекс перемещенной карточки в соответствии с новым списком
-    // newMovedCard.index = destination.index;
-
-    // Добавим перемещенную карточку в конечный список
-    // endList.splice(destination.index, 0, newMovedCard);
-
-    // Обновим состояние вашего приложения, например, отправим запрос на сервер для сохранения изменений
-    // dispatch(updateCardPositionThunk(movedCard, endList._id));
-
-    // Обновим состояние вашего приложения
-    // setCards(...);
   };
 
   return (

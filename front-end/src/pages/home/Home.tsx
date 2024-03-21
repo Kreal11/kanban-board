@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { selectGetBoards } from "../../redux/board/selectors";
+import { selectGetBoards, selectIsLoading } from "../../redux/board/selectors";
 import React, { useEffect } from "react";
 import { useAppDispatch } from "../../redux/hooks";
 import { getAllBoardsThunk } from "../../redux/board/operations";
@@ -15,6 +15,7 @@ const Home = () => {
   const boards = useSelector(selectGetBoards);
   const dispatch = useAppDispatch();
   const { isOpen, openModal, closeModal } = useModal();
+  const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
     dispatch(getAllBoardsThunk())
@@ -29,6 +30,7 @@ const Home = () => {
 
   return (
     <BoardsWrapper>
+      {isLoading && <p>Loading...</p>}
       <BoardsList>
         {(!boards || !boards.length) && (
           <AddBoardWrapper onClick={openModal}>
@@ -38,20 +40,19 @@ const Home = () => {
             <p>Add board</p>
           </AddBoardWrapper>
         )}
-        {boards?.length &&
-          boards.map((board, index) => (
-            <React.Fragment key={board._id}>
-              {index === 0 && (
-                <AddBoardWrapper onClick={openModal}>
-                  <svg>
-                    <use xlinkHref={`${sprite}#icon-plus`} />
-                  </svg>
-                  <p>Add board</p>
-                </AddBoardWrapper>
-              )}
-              <BoardItem {...board} />
-            </React.Fragment>
-          ))}
+        {boards.map((board, index) => (
+          <React.Fragment key={board._id}>
+            {index === 0 && (
+              <AddBoardWrapper onClick={openModal}>
+                <svg>
+                  <use xlinkHref={`${sprite}#icon-plus`} />
+                </svg>
+                <p>Add board</p>
+              </AddBoardWrapper>
+            )}
+            <BoardItem {...board} />
+          </React.Fragment>
+        ))}
       </BoardsList>
       {isOpen && (
         <Modal closeModal={closeModal}>
