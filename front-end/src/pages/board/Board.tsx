@@ -13,11 +13,10 @@ import {
   CardList,
   CardListWrapper,
   CardListsWrapper,
-  CardPlusSvg,
+  CardPlusImgWrapper,
   HomeButton,
 } from "./Board.styled";
 import CardItem from "../../components/cardItem/CardItem";
-import sprite from "../../assets/icons/plus.svg";
 import Modal from "../../components/modal/Modal";
 import AddCardForm from "../../components/addCardForm/AddCardForm";
 import { useModal } from "../../hooks/useModal";
@@ -27,6 +26,7 @@ import {
   updateCardWorkStatusThunk,
 } from "../../redux/card/operations";
 import { Card } from "../../redux/board/types";
+import plusImg from "../../assets/images/plus.png";
 
 const Board = () => {
   const { id } = useParams();
@@ -285,9 +285,9 @@ const Board = () => {
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                   >
-                    <CardPlusSvg onClick={openModal}>
-                      <use xlinkHref={`${sprite}#icon-plus`} />
-                    </CardPlusSvg>
+                    <CardPlusImgWrapper onClick={openModal}>
+                      <img src={plusImg} alt="Plus" />
+                    </CardPlusImgWrapper>
 
                     {toDo?.map((card, index) => (
                       <CardItem key={card._id} {...card} index={index} />

@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router";
-import sprite from "../../assets/icons/plus.svg";
 import { BoardInfoWrapper, BoardLi, ButtonsWrapper } from "./BoardItem.styled";
 import { useAppDispatch } from "../../redux/hooks";
 import { deleteBoardThunk } from "../../redux/board/operations";
@@ -7,6 +6,8 @@ import { useModal } from "../../hooks/useModal";
 import Modal from "../modal/Modal";
 import UpdateBoardForm from "../updateBoardForm/UpdateBoardForm";
 import { toast } from "react-toastify";
+import editImg from "../../assets/images/edit.png";
+import deleteImg from "../../assets/images/delete.png";
 
 interface BoardItemProps {
   title: string;
@@ -46,14 +47,10 @@ const BoardItem = ({ title, theme, _id }: BoardItemProps) => {
         </BoardInfoWrapper>
         <ButtonsWrapper>
           <button onClick={openModal}>
-            <svg>
-              <use xlinkHref={`${sprite}#icon-edit`} />
-            </svg>
+            <img src={editImg} alt="Edit mark" />
           </button>
           <button onClick={() => hanldeDeleteBoard(_id)}>
-            <svg>
-              <use xlinkHref={`${sprite}#icon-delete`} />
-            </svg>
+            <img src={deleteImg} alt="Delete bin" />
           </button>
         </ButtonsWrapper>
       </BoardLi>
