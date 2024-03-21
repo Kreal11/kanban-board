@@ -4,6 +4,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { getBoardByIdThunk } from "../../redux/board/operations";
 import { useSelector } from "react-redux";
 import {
+  selectError,
   selectGetBoardById,
   selectIsLoading,
 } from "../../redux/board/selectors";
@@ -37,6 +38,7 @@ const Board = () => {
 
   const { cards } = useSelector(selectGetBoardById);
   const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
   const [toDo, setToDo] = useState<Card[]>([]);
   const [inProgress, setInProgress] = useState<Card[]>([]);
@@ -273,77 +275,79 @@ const Board = () => {
     <>
       <BoardWrapper>
         <HomeButton onClick={handleGoHome}>↩ Home</HomeButton>
+        {error && <p>Maybe, ID of board is wrong. Try again, please</p>}
+        {!error && (
+          <DragDropContext onDragEnd={onDragEnd}>
+            <CardListsWrapper>
+              <Droppable droppableId="toDo">
+                {(provided) => (
+                  <CardListWrapper>
+                    <h2>To Do</h2>
+                    <CardPlusImgWrapper onClick={openModal}>
+                      <img src={plusImg} alt="Plus" />
+                    </CardPlusImgWrapper>
+                    <CardList
+                      $toDo="toDo"
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {toDo?.map((card, index) => (
+                        <CardItem key={card._id} {...card} index={index} />
+                      ))}
+                      {!cards.length && (
+                        <p>
+                          There are no cards yet. Add new card to see it in the
+                          list
+                        </p>
+                      )}
+                      {provided.placeholder}
+                    </CardList>
+                  </CardListWrapper>
+                )}
+              </Droppable>
 
-        <DragDropContext onDragEnd={onDragEnd}>
-          <CardListsWrapper>
-            <Droppable droppableId="toDo">
-              {(provided) => (
-                <CardListWrapper>
-                  <h2>To Do</h2>
-                  <CardPlusImgWrapper onClick={openModal}>
-                    <img src={plusImg} alt="Plus" />
-                  </CardPlusImgWrapper>
-                  <CardList
-                    $toDo="toDo"
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
-                    {toDo?.map((card, index) => (
-                      <CardItem key={card._id} {...card} index={index} />
-                    ))}
-                    {!cards.length && (
-                      <p>
-                        There are no cards yet. Add new card to see it in the
-                        list
-                      </p>
-                    )}
-                    {provided.placeholder}
-                  </CardList>
-                </CardListWrapper>
-              )}
-            </Droppable>
+              <Droppable droppableId="inProgress">
+                {(provided) => (
+                  <CardListWrapper>
+                    <h2>In Progress</h2>
+                    <CardList
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {inProgress?.map((card, index) => (
+                        <CardItem key={card._id} {...card} index={index} />
+                      ))}
+                      {!inProgress.length && (
+                        <p>Move the card in this column to see it there</p>
+                      )}
+                      {provided.placeholder}
+                    </CardList>
+                  </CardListWrapper>
+                )}
+              </Droppable>
 
-            <Droppable droppableId="inProgress">
-              {(provided) => (
-                <CardListWrapper>
-                  <h2>In Progress</h2>
-                  <CardList
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
-                    {inProgress?.map((card, index) => (
-                      <CardItem key={card._id} {...card} index={index} />
-                    ))}
-                    {!inProgress.length && (
-                      <p>Move the card in this column to see it there</p>
-                    )}
-                    {provided.placeholder}
-                  </CardList>
-                </CardListWrapper>
-              )}
-            </Droppable>
-
-            <Droppable droppableId="done">
-              {(provided) => (
-                <CardListWrapper>
-                  <h2>Done</h2>
-                  <CardList
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
-                    {done?.map((card, index) => (
-                      <CardItem key={card._id} {...card} index={index} />
-                    ))}
-                    {!done.length && (
-                      <p>Move the card in this column to see it there</p>
-                    )}
-                    {provided.placeholder}
-                  </CardList>
-                </CardListWrapper>
-              )}
-            </Droppable>
-          </CardListsWrapper>
-        </DragDropContext>
+              <Droppable droppableId="done">
+                {(provided) => (
+                  <CardListWrapper>
+                    <h2>Done</h2>
+                    <CardList
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {done?.map((card, index) => (
+                        <CardItem key={card._id} {...card} index={index} />
+                      ))}
+                      {!done.length && (
+                        <p>Move the card in this column to see it there</p>
+                      )}
+                      {provided.placeholder}
+                    </CardList>
+                  </CardListWrapper>
+                )}
+              </Droppable>
+            </CardListsWrapper>
+          </DragDropContext>
+        )}
       </BoardWrapper>
       {isOpen && (
         <Modal closeModal={closeModal}>
