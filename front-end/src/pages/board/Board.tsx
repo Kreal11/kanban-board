@@ -89,138 +89,186 @@ const Board = () => {
       return;
     }
 
-    if (source.droppableId !== destination.droppableId) {
-      const updatedToDo = [...toDo];
-      const updatedInProgress = [...inProgress];
-      const updatedDone = [...done];
+    // if (source.droppableId === destination.droppableId) {
+    const updatedToDo = [...toDo];
+    const updatedInProgress = [...inProgress];
+    const updatedDone = [...done];
 
-      const movedCard =
-        updatedToDo.find((card) => card._id === draggableId) ||
-        updatedInProgress.find((card) => card._id === draggableId) ||
-        updatedDone.find((card) => card._id === draggableId);
+    const movedCard =
+      updatedToDo.find((card) => card._id === draggableId) ||
+      updatedInProgress.find((card) => card._id === draggableId) ||
+      updatedDone.find((card) => card._id === draggableId);
 
-      // Удаляем карточку из исходного списка
-      let sourceList;
-      switch (source.droppableId) {
-        case "toDo":
-          sourceList = updatedToDo;
-          break;
-        case "inProgress":
-          sourceList = updatedInProgress;
-          break;
-        case "done":
-          sourceList = updatedDone;
-          break;
-        default:
-          sourceList = null;
-      }
-
-      if (sourceList) {
-        sourceList.splice(source.index, 1);
-      }
-
-      // Добавляем карточку в конечный список
-      let destinationList;
-      switch (destination.droppableId) {
-        case "toDo":
-          destinationList = updatedToDo;
-          break;
-        case "inProgress":
-          destinationList = updatedInProgress;
-          break;
-        case "done":
-          destinationList = updatedDone;
-          break;
-        default:
-          destinationList = null;
-      }
-
-      if (destinationList && movedCard) {
-        destinationList.splice(destination.index, 0, movedCard);
-      }
-
-      setToDo(updatedToDo);
-      setInProgress(updatedInProgress);
-      setDone(updatedDone);
-
-      setTimeout(async () => {
-        await dispatch(
-          updateCardWorkStatusThunk({
-            id: draggableId,
-            workStatus: destination.droppableId,
-          })
-        )
-          .unwrap()
-          .then(() => {
-            toast.success("Card status was changed successfully!");
-          })
-          .catch(() => {
-            toast.warning("Oops, something went wrong! Try again, please!");
-          });
-      }, 0);
+    let sourceList;
+    switch (source.droppableId) {
+      case "toDo":
+        sourceList = updatedToDo;
+        break;
+      case "inProgress":
+        sourceList = updatedInProgress;
+        break;
+      case "done":
+        sourceList = updatedDone;
+        break;
+      default:
+        sourceList = null;
     }
 
-    if (source.droppableId === destination.droppableId) {
-      const updatedList =
-        destination.droppableId === "toDo"
-          ? [...toDo]
-          : destination.droppableId === "inProgress"
-          ? [...inProgress]
-          : [...done];
+    if (sourceList) {
+      sourceList.splice(source.index, 1);
 
-      const movedCard = updatedList.find((card) => card._id === draggableId);
+      const updatedSourceList = sourceList.map((card, index) => ({
+        ...card,
+        cardOrder: index,
+      }));
 
-      if (movedCard) {
-        const movedCardOrder = movedCard.cardOrder;
-
-        const updatedCards = updatedList.map((card) => {
-          const updatedCard = { ...card };
-          if (card.cardOrder === movedCardOrder) {
-            updatedCard.cardOrder = destination.index;
-          } else if (
-            destination.index > movedCardOrder &&
-            card.cardOrder <= destination.index &&
-            card.cardOrder > movedCardOrder
-          ) {
-            updatedCard.cardOrder--;
-          } else if (
-            destination.index < movedCardOrder &&
-            card.cardOrder >= destination.index &&
-            card.cardOrder < movedCardOrder
-          ) {
-            updatedCard.cardOrder++;
-          }
-          return updatedCard;
-        });
-
-        if (destination.droppableId === "toDo") {
-          const sortedToDo = updatedCards.sort(
-            (a, b) => a.cardOrder - b.cardOrder
-          );
-          setToDo(sortedToDo);
-        } else if (destination.droppableId === "inProgress") {
-          const sortedInProgress = updatedCards.sort(
-            (a, b) => a.cardOrder - b.cardOrder
-          );
-          setInProgress(sortedInProgress);
-        } else {
-          const sortedDone = updatedCards.sort(
-            (a, b) => a.cardOrder - b.cardOrder
-          );
-          setDone(sortedDone);
-        }
-
-        Promise.all(
-          updatedCards.map((card) =>
-            dispatch(
-              updateCardOrderThunk({
-                id: card._id,
-                cardOrder: card.cardOrder,
-              })
-            )
+      Promise.all(
+        updatedSourceList.map((card) =>
+          dispatch(
+            updateCardOrderThunk({
+              id: card._id,
+              cardOrder: card.cardOrder,
+            })
           )
-        );
+        )
+      );
+
+      switch (source.droppableId) {
+        case "toDo":
+          setToDo(updatedSourceList);
+          break;
+        case "inProgress":
+          setInProgress(updatedSourceList);
+          break;
+        case "done":
+          setDone(updatedSourceList);
+          break;
+        default:
+          break;
       }
+    }
+
+    let destinationList;
+    switch (destination.droppableId) {
+      case "toDo":
+        destinationList = updatedToDo;
+        break;
+      case "inProgress":
+        destinationList = updatedInProgress;
+        break;
+      case "done":
+        destinationList = updatedDone;
+        break;
+      default:
+        destinationList = null;
+    }
+
+    if (destinationList && movedCard) {
+      destinationList.splice(destination.index, 0, movedCard);
+
+      const updatedDestinationList = destinationList.map((card, index) => ({
+        ...card,
+        cardOrder: index,
+      }));
+
+      Promise.all(
+        updatedDestinationList.map((card) =>
+          dispatch(
+            updateCardOrderThunk({
+              id: card._id,
+              cardOrder: card.cardOrder,
+            })
+          )
+        )
+      );
+
+      switch (source.droppableId) {
+        case "toDo":
+          setToDo(updatedDestinationList);
+          break;
+        case "inProgress":
+          setInProgress(updatedDestinationList);
+          break;
+        case "done":
+          setDone(updatedDestinationList);
+          break;
+        default:
+          break;
+      }
+    }
+
+    setToDo(updatedToDo);
+    setInProgress(updatedInProgress);
+    setDone(updatedDone);
+    // }
+    if (source.droppableId !== destination.droppableId) {
+      let updatedList;
+      switch (destination.droppableId) {
+        case "toDo":
+          updatedList = [...toDo];
+          break;
+        case "inProgress":
+          updatedList = [...inProgress];
+          break;
+        case "done":
+          updatedList = [...done];
+          break;
+        default:
+          updatedList = null;
+      }
+
+      if (updatedList) {
+        const movedCard = updatedList.find((card) => card._id === draggableId);
+        if (movedCard) {
+          updatedList.splice(destination.index, 0, movedCard);
+          updatedList = updatedList.map((card, index) => ({
+            ...card,
+            cardOrder: index,
+          }));
+
+          Promise.all(
+            updatedList.map((card) =>
+              dispatch(
+                updateCardOrderThunk({
+                  id: card._id,
+                  cardOrder: card.cardOrder,
+                })
+              )
+            )
+          );
+
+          switch (destination.droppableId) {
+            case "toDo":
+              setToDo(updatedList);
+              break;
+            case "inProgress":
+              setInProgress(updatedList);
+              break;
+            case "done":
+              setDone(updatedList);
+              break;
+            default:
+              break;
+          }
+        }
+      }
+      setTimeout(async () => {
+        // try {
+        Promise.all([
+          dispatch(
+            updateCardWorkStatusThunk({
+              id: draggableId,
+              workStatus: destination.droppableId,
+            })
+          ),
+          dispatch(
+            updateCardOrderThunk({
+              id: draggableId,
+              cardOrder: destination.index,
+            })
+          ),
+        ]);
+      }, 0);
     }
   };
 
