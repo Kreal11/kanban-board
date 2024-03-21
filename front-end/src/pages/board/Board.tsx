@@ -89,7 +89,6 @@ const Board = () => {
       return;
     }
 
-    // if (source.droppableId === destination.droppableId) {
     const updatedToDo = [...toDo];
     const updatedInProgress = [...inProgress];
     const updatedDone = [...done];
@@ -200,7 +199,7 @@ const Board = () => {
     setToDo(updatedToDo);
     setInProgress(updatedInProgress);
     setDone(updatedDone);
-    // }
+
     if (source.droppableId !== destination.droppableId) {
       let updatedList;
       switch (destination.droppableId) {
@@ -253,7 +252,6 @@ const Board = () => {
         }
       }
       setTimeout(async () => {
-        // try {
         Promise.all([
           dispatch(
             updateCardWorkStatusThunk({
