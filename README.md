@@ -2,6 +2,8 @@
 
 ## Getting Started
 
+You can use link on Live page at the top right of this repository.
+
 To run the project locally, follow these steps:
 
 ### Frontend
@@ -24,8 +26,6 @@ npm run start:dev
 
 The backend of this project is hosted on Render, while the frontend is deployed on Vercel.
 The project uses a global MongoDB database through MongoDB Atlas.
-
-The link to the Vercel deployment is pinned at the top right of this repository.
 
 ***Important Note:*** The free version of Render has limitations. Consequently, when initially connecting, the server may take some time to wake up. If there are no requests made to the server for 15 minutes, it will enter a "sleep" state, and subsequent connections may also experience delays.
 
