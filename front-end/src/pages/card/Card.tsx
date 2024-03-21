@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getCardByIdThunk } from "../../redux/card/operations";
 import { toast } from "react-toastify";
 import { selectGetCard } from "../../redux/card/selectors";
+import { CardPageInfoWrapper } from "./Card.styled";
 
 const Card = () => {
   const { id } = useParams();
@@ -28,11 +29,11 @@ const Card = () => {
   };
 
   return (
-    <div>
+    <CardPageInfoWrapper>
       <button onClick={handleGoBack}>↩ Back</button>
       <h3>{title}</h3>
       <p>Description: {description}</p>
-    </div>
+    </CardPageInfoWrapper>
   );
 };
 
