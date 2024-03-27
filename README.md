@@ -10,6 +10,7 @@ To run the project locally, follow these steps:
 
 ```bash
 cd front-end
+npm install
 npm run dev
 ```
 
@@ -17,6 +18,7 @@ npm run dev
 
 ```bash
 cd back-end
+npm install
 npm run start:dev
 ```
 
