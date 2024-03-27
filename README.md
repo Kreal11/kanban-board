@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-You can use link on Live page at the top right of this repository.
+You can use the link on the Live page at the top right of this repository.
 
 To run the project locally, follow these steps:
 
@@ -17,7 +17,7 @@ npm run dev
 ### Backend
 
 ```bash
-cd back-end
+cd backend
 npm install
 npm run start:dev
 ```
