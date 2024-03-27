@@ -50,15 +50,17 @@ The project offers the following functionality:
 
 The project utilizes the following technologies:
 
-![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![React](https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=react&logoColor=white)
-![Redux Toolkit](https://img.shields.io/badge/-Redux_Toolkit-764ABC?style=flat-square&logo=redux&logoColor=white)
-![React Router Dom](https://img.shields.io/badge/-React_Router_Dom-CA4245?style=flat-square&logo=react-router&logoColor=white)
-![React Hook Form](https://img.shields.io/badge/-React_Hook_Form-FF6B6B?style=flat-square&logo=react&logoColor=white)
-![React-beautiful-dnd](https://img.shields.io/badge/-React_beautiful_dnd-FFD166?style=flat-square&logo=react&logoColor=white)
-![Node](https://img.shields.io/badge/-Node-339933?style=flat-square&logo=node.js&logoColor=white)
-![Express](https://img.shields.io/badge/-Express-000000?style=flat-square&logo=express&logoColor=white)
-![Mongoose](https://img.shields.io/badge/-Mongoose-47A248?style=flat-square&logo=mongoose&logoColor=white)
-![Vite](https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
+<div align='center'>
+        <img src="https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" height=30>
+        <img src="https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React" height=30>
+        <img src="https://img.shields.io/badge/-Redux_Toolkit-764ABC?style=flat-square&logo=redux&logoColor=white" alt="Redux Toolkit" height=30>
+        <img src="https://img.shields.io/badge/-React_Router_Dom-CA4245?style=flat-square&logo=react-router&logoColor=white" alt="React Router Dom" height=30>
+        <img src="https://img.shields.io/badge/-React_Hook_Form-FF6B6B?style=flat-square&logo=react&logoColor=white" alt="React Hook Form" height=30>
+        <img src="https://img.shields.io/badge/-React_beautiful_dnd-FFD166?style=flat-square&logo=react&logoColor=white" alt="React-beautiful-dnd" height=30>
+        <img src="https://img.shields.io/badge/-Node-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node" height=30>
+        <img src="https://img.shields.io/badge/-Express-000000?style=flat-square&logo=express&logoColor=white" alt="Express" height=30>
+        <img src="https://img.shields.io/badge/-Mongoose-47A248?style=flat-square&logo=mongoose&logoColor=white" alt="Mongoose" height=30>
+        <img src="https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite" height=30>
+</div>
 
 Made with 💙 by Kyrylo Shyrokov
